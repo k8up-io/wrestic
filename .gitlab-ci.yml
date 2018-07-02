@@ -1,0 +1,39 @@
+image: golang:1.10-alpine
+
+variables:
+  BASE_URL: git.vshn.net
+
+before_script:
+  - go version
+  - echo $CI_BUILD_REF
+  - echo $CI_PROJECT_DIR
+  - echo "$GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME"
+  # To find references to its own modules the project has still
+  # to be copied to the correct location in the GOPATH.
+  - mkdir -p $GOPATH/src/$BASE_URL/
+  - cp -r /builds/$CI_PROJECT_NAMESPACE $GOPATH/src/$BASE_URL/
+
+
+stages:
+  - test
+  - build
+
+test_project:
+  stage: test
+  only:
+    - master
+    - dev
+  script:
+    - cd $GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - go generate ./...
+    - go test ./...
+
+
+binaries:
+  stage: build
+  only:
+    - tags
+  script:
+    - cd $GOPATH/src/$BASE_URL/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - docker build -t TBD/wrestic:CI_COMMIT_TAG .
+    - echo "push"

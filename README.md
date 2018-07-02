@@ -1,3 +1,37 @@
 # Wrestic
 
 Wrapper for restic.
+
+## Configuration
+All the configuration needed can be done via environment variables:
+
+* `HOSTNAME` overwrite the hostname used for the backup
+* `KEEP_LAST` amount of last backups that should be kept
+* `KEEP_HOURLY` amount of hourly backups that should be kept
+* `KEEP_DAILY` amount of daily backups that should be kept
+* `KEEP_WEEKLY` amount of weekly backups that should be kept
+* `KEEP_MONTHLY` amount of monthly backups that should be kept
+* `KEEP_YEARLY` amount of yearly backups that should be kept
+* `KEEP_TAG` what tags should be kept **Not yet implemented**
+* `PROM_URL` Prometheus push gateway url
+* `BACKUP_DIR` directory that should get backed up, default: `/data`
+
+## Execution
+First build the container:
+
+```
+cd cmd/wrestic
+docker build -t wrestic/wrestic .
+```
+
+Then run the container and mount the folders you'd like to be backed up to `/data`:
+```
+docker run -e "HOSTNAME=test" -e "PROM_URL=http://192.168.1.43:9091" -v /path/to/back:/data/ wrestic/wrestic
+```
+
+Run a check of the repository:
+```
+docker run -e "HOSTNAME=test" -e "PROM_URL=http://192.168.1.43:9091" -v /path/to/back:/data/ wrestic/wrestic -check
+```
+
+The container will exit after the job is done. If a valid `PROM_URL` is provided it will push metrics there.
