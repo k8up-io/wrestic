@@ -23,4 +23,5 @@ gen### Go template
 .glide/
 
 /cmd/*/debug
+/cmd/wrestic/wrestic
 *.DS_Store
