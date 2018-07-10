@@ -9,5 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Initial version
 - Improved error detection and various bugfixes
+- Timeout for initial snapshot listing, default: 30s
 
 [Unreleased]: https://git.vshn.net/vshn/wrestic/
