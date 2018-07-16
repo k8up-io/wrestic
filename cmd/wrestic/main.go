@@ -25,13 +25,14 @@ const (
 	keepTagEnv     = "KEEP_TAG"
 	promURLEnv     = "PROM_URL"
 	backupDirEnv   = "BACKUP_DIR"
+	listTimeoutEnv = "BACKUP_LIST_TIMEOUT"
 	//Arguments for restic
 	keepLastArg    = "--keep-last"
 	keepHourlyArg  = "--keep-hourly"
 	keepDailyArg   = "--keep-daily"
 	keepWeeklyArg  = "--keep-weekly"
 	keepMonthlyArg = "--keep-monthly"
-	keepYearlyArg  = "--keep-yearly "
+	keepYearlyArg  = "--keep-yearly"
 )
 
 var (
@@ -68,27 +69,47 @@ func initRepository() {
 
 func listSnapshots() ([]snapshot, error) {
 	args := []string{"snapshots", "--json", "-q"}
-	output := genericCommand(args, false)
-	if strings.Contains(string(output), "following location?") {
-		commandError = nil
-		return nil, errors.New("Not initialised yet")
+	var output []byte
+	var timeout int
+	var converr error
+
+	if timeout, converr = strconv.Atoi(os.Getenv(listTimeoutEnv)); converr != nil {
+		timeout = 30
 	}
-	snapList := make([]snapshot, 0)
-	err := json.Unmarshal(output, &snapList)
-	if err != nil {
-		return nil, err
+
+	done := make(chan []byte)
+	go func() { done <- genericCommand(args, false) }()
+	fmt.Printf("Listing snapshots, timeout: %v\n", timeout)
+	select {
+	case output = <-done:
+		if strings.Contains(string(output), "following location?") {
+			commandError = nil
+			return nil, errors.New("Not initialised yet")
+		}
+		snapList := make([]snapshot, 0)
+		err := json.Unmarshal(output, &snapList)
+		if err != nil {
+			fmt.Printf("Error listing snapshots\n%v\n%v", err, string(output))
+			return nil, err
+		}
+		availableSnapshots := len(snapList)
+		fmt.Printf("%v command:\n%v Snapshots\n", args[0], availableSnapshots)
+		metrics.AvailableSnapshots.Set(float64(availableSnapshots))
+		metrics.Trigger <- metrics.AvailableSnapshots
+		return snapList, nil
+	case <-time.After(time.Duration(timeout) * time.Second):
+		commandError = errors.New("connection timed out")
+		return nil, commandError
 	}
-	availableSnapshots := len(snapList)
-	fmt.Printf("%v command:\n%v Snapshots\n", args[0], availableSnapshots)
-	metrics.AvailableSnapshots.Set(float64(availableSnapshots))
-	metrics.Trigger <- metrics.AvailableSnapshots
-	return snapList, nil
 }
 
 func backup() {
 	fmt.Println("backing up...")
 	args := []string{"backup", backupDir, "--hostname", os.Getenv(hostname)}
-	parseBackupOutput(genericCommand(args, true))
+	output := genericCommand(args, true)
+	if commandError == nil {
+		parseBackupOutput(output)
+	}
 }
 func forget() {
 	args := []string{"forget", "--prune"}
@@ -157,6 +178,10 @@ func main() {
 	startMetrics()
 
 	defer func() {
+		if commandError != nil {
+			fmt.Println("Error occurred: ", commandError)
+			exit = 1
+		}
 		metrics.BackupEndTimestamp.SetToCurrentTime()
 		metrics.Trigger <- metrics.BackupEndTimestamp
 		// Block a second to transmit the metrics
@@ -174,11 +199,6 @@ func main() {
 		checkCommand()
 	}
 
-	if commandError != nil {
-		fmt.Println("Error occurred: ", commandError)
-		exit = 1
-	}
-
 }
 
 func startMetrics() {
@@ -194,11 +214,11 @@ func parseBackupOutput(output []byte) {
 	files := strings.Fields(strings.Split(lines[len(lines)-7], ":")[1])
 	dirs := strings.Fields(strings.Split(lines[len(lines)-6], ":")[1])
 
-	var errors = 0
+	var errorCount = 0
 
 	for i := range lines {
-		if strings.Contains(lines[i], "error") {
-			errors++
+		if strings.Contains(lines[i], "error") || strings.Contains(lines[i], "Fatal") {
+			errorCount++
 		}
 	}
 
@@ -211,7 +231,9 @@ func parseBackupOutput(output []byte) {
 	unmodifiedDirs, err := strconv.Atoi(dirs[4])
 
 	if err != nil {
-		fmt.Println("There was a problem convertig the metrics: ", err)
+		errorMessage := fmt.Sprintln("There was a problem convertig the metrics: ", err)
+		fmt.Println(errorMessage)
+		commandError = errors.New(errorMessage)
 		return
 	}
 
@@ -227,7 +249,7 @@ func parseBackupOutput(output []byte) {
 	metrics.Trigger <- metrics.ChangedDirs
 	metrics.UnmodifiedDirs.Set(float64(unmodifiedDirs))
 	metrics.Trigger <- metrics.UnmodifiedDirs
-	metrics.Errors.Set(float64(errors))
+	metrics.Errors.Set(float64(errorCount))
 	metrics.Trigger <- metrics.Errors
 }
 
@@ -245,6 +267,7 @@ func parseCheckOutput(output []byte) {
 	if strings.Contains(lastLine, "Fatal") {
 		metrics.Errors.Set(1)
 		metrics.Trigger <- metrics.Errors
+		commandError = errors.New("There was a backup error")
 	}
 }
 
