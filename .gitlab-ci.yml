@@ -7,7 +7,7 @@ before_script:
 
 variables:
   REGISTRY: "registry.vshn.net"
-  IMAGE_NAME: "vshn/baas"
+  IMAGE_NAME: "vshn/wrestic"
 
 build:
   script:
