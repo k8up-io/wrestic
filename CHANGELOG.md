@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.0.2] - 07-27-2018
+### Added
+- CI/CD pipeline
+
 ## [v0.0.1] - 07-26-2018
 ### Added
 - Initial version
