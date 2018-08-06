@@ -17,4 +17,4 @@ COPY . .
 
 RUN go install -v ./...
 
-ENTRYPOINT [ "wrestic" ]
+ENTRYPOINT "wrestic"
