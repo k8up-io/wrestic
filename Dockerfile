@@ -1,7 +1,7 @@
 FROM golang:1.10-alpine
 
-ENV RESTIC_VERSION=0.9.1 \
-    SHASUM=f7f76812fa26ca390029216d1378e5504f18ba5dde790878dfaa84afef29bda7
+ENV RESTIC_VERSION=0.9.2 \
+    SHASUM=1ad8a76a9f966da5f7a319c49a6db071a60ebaa24d69e6d86d53d6f2bcaf11ed
 
 WORKDIR /tmp
 RUN set -x; apk add --no-cache wget bzip2 ca-certificates && \

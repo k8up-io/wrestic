@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Ability to do backups via OpenShift stdout
 - Warpperscript to correctly pass the arguments to wrestic in docker
 - Adjustments to the metric handling
+- Restic 0.9.2
 
 ## [v0.0.2] - 2018-07-27
 ### Added
