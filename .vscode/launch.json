@@ -52,7 +52,9 @@
         "args": [
             "-stdin",
             "-arrayOpts",
-            "mysqldump -uroot -psecure --all-databases,mariadb-b5b9dd4d6-scwvl,mariadb,myproject",
+            "mysqldump -uroot -psecure --all-databases,mariadb-b5b9dd4d6-lvl4d,mariadb,myproject",
+            "-arrayOpts",
+            "mongodump --archive -u root -p example,mongodb-cb7b8c89f-6h7k5,mongodb,myproject",
         ],
         "port": 2345,
         "host": "127.0.0.1",
