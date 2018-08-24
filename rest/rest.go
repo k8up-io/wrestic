@@ -3,6 +3,7 @@ package rest
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -26,7 +27,7 @@ type Params struct {
 
 // PodExec sends the command to the specified pod
 // and returns a bytes buffer with the stdout
-func PodExec(params Params) (*bytes.Buffer, error) {
+func PodExec(params Params) (io.Reader, error) {
 	config, _ := getClientConfig()
 	k8sclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
@@ -61,20 +62,24 @@ func PodExec(params Params) (*bytes.Buffer, error) {
 		return nil, err
 	}
 
-	var stdout, stderr bytes.Buffer
-	err = exec.Stream(remotecommand.StreamOptions{
-		Stdin:  nil,
-		Stdout: &stdout,
-		Stderr: &stderr,
-		Tty:    false,
-	})
+	var stderr bytes.Buffer
+	var stdoutReader, stdoutWriter = io.Pipe()
+	go func() {
+		err = exec.Stream(remotecommand.StreamOptions{
+			Stdin:  nil,
+			Stdout: stdoutWriter,
+			Stderr: &stderr,
+			Tty:    false,
+		})
 
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
+		if err != nil {
+			fmt.Println(err)
+			// return nil, err
+		}
+		stdoutWriter.Close()
+	}()
 
-	return &stdout, nil
+	return stdoutReader, nil
 }
 
 func getClientConfig() (*rest.Config, error) {
