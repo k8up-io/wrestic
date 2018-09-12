@@ -5,22 +5,22 @@
   "version": "0.2.0",
   "configurations": [
       {
-          "name": "Launch restic",
-          "type": "go",
-          "request": "launch",
-          "mode": "debug",
-          "program": "${workspaceFolder}/cmd/wrestic/main.go",
-          "port": 2345,
-          "host": "127.0.0.1",
-          "env": {
-              "RESTIC_REPOSITORY": "s3:http://10.144.1.133:9000/baas1",
-              "RESTIC_PASSWORD": "asdf",
-              "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
-              "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
-              "PROM_URL":"http://localhost:9091/",
-              "HOSTNAME":"test",
-              "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
-          }
+        "name": "Launch restic",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${workspaceFolder}/cmd/wrestic/main.go",
+        "port": 2345,
+        "host": "127.0.0.1",
+        "env": {
+            "RESTIC_REPOSITORY": "s3:http://192.168.5.38:9000/baas1",
+            "RESTIC_PASSWORD": "asdf",
+            "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
+            "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+            "PROM_URL":"http://localhost:9091/",
+            "HOSTNAME":"test",
+            "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
+        }
       },
       {
           "name": "Launch restic check",
@@ -52,9 +52,7 @@
         "args": [
             "-stdin",
             "-arrayOpts",
-            "mysqldump -uroot -psecure --all-databases,mariadb-b5b9dd4d6-lvl4d,mariadb,myproject",
-            "-arrayOpts",
-            "mongodump --archive -u root -p example,mongodb-cb7b8c89f-6h7k5,mongodb,myproject",
+            "mysqldump -uroot -psecure --all-databases,mariadb-6665df48c4-mz58z,mariadb,myproject",
         ],
         "port": 2345,
         "host": "127.0.0.1",
