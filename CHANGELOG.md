@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [unrelease] - 2018-09-18
 ### Added
 - Ability to post metrics to an arbitrary HTTP endpoint
+### Fixed
+- Too small buffer for output parsing
 
 ## [v0.0.4] - 2018-09-12
 ### Fixed
