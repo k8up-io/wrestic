@@ -13,7 +13,7 @@
         "port": 2345,
         "host": "127.0.0.1",
         "env": {
-            "RESTIC_REPOSITORY": "s3:http://192.168.5.38:9000/baas1",
+            "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas1",
             "RESTIC_PASSWORD": "asdf",
             "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
             "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
@@ -65,6 +65,60 @@
             "HOSTNAME":"test",
             "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
         }
-    }
+    },
+    {
+        "name": "Launch restic restore folder",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${workspaceFolder}/cmd/wrestic/main.go",
+        "port": 2345,
+        "host": "127.0.0.1",
+        "args":[
+            "-restore",
+            "-restoreType",
+            "folder",
+            "-restorePVC",
+            "/Users/simonbeck/Desktop/data/test",
+        ],
+        "env": {
+            "RESTIC_REPOSITORY": "s3:http://10.144.1.224:9000/baas1",
+            "RESTIC_PASSWORD": "asdf",
+            "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
+            "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+            "PROM_URL":"http://localhost:9091/",
+            "HOSTNAME":"test",
+            "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
+            "RESTORE_DIR": "/Users/simonbeck/Desktop/restore"
+        }
+      },
+      {
+        "name": "Launch restic restore s3",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${workspaceFolder}/cmd/wrestic/main.go",
+        "port": 2345,
+        "host": "127.0.0.1",
+        "args":[
+            "-restore",
+            "-restoreFilter",
+            "/Users/simonbeck/Desktop/data/test",
+            "-restoreType",
+            "s3",
+        ],
+        "env": {
+            "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas1",
+            "RESTIC_PASSWORD": "asdf",
+            "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
+            "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+            "PROM_URL":"http://localhost:9091/",
+            "HOSTNAME":"test",
+            "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
+            "RESTORE_S3ENDPOINT":"http://localhost:9000/restore",
+            "RESTORE_ACCESSKEYID":"8U0UDNYPNUDTUS1LIAF3",
+            "RESTORE_SECRETACCESSKEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+        }
+      }
   ]
 }

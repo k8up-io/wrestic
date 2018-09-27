@@ -45,6 +45,14 @@
   revision = "bc6354cbbc295e925e4c611ffe90c1f287ee54db"
 
 [[projects]]
+  branch = "master"
+  digest = "1:6f9339c912bbdda81302633ad7e99a28dfa5a639c864061f1929510a9a64aa74"
+  name = "github.com/dustin/go-humanize"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "9f541cc9db5d55bce703bd99987c9d5cb8eea45e"
+
+[[projects]]
   digest = "1:899234af23e5793c34e06fd397f86ba33af5307b959b6a7afd19b63db065a9d7"
   name = "github.com/emicklei/go-restful"
   packages = [
@@ -70,6 +78,14 @@
   pruneopts = "UT"
   revision = "0ca9ea5df5451ffdf184b4428c902747c2c11cd7"
   version = "v1.0.0"
+
+[[projects]]
+  digest = "1:5abd6a22805b1919f6a6bca0ae58b13cef1f3412812f38569978f43ef02743d4"
+  name = "github.com/go-ini/ini"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5cf292cae48347c2490ac1a58fe36735fb78df7e"
+  version = "v1.38.2"
 
 [[projects]]
   digest = "1:2997679181d901ac8aaf4330d11138ecf3974c6d3334995ff36f20cbd597daf8"
@@ -208,6 +224,46 @@
   version = "1.0.1"
 
 [[projects]]
+  digest = "1:d5f48855170be8f523ecb23af1886a6b142b44ec64015fa91a03bd02076ceff4"
+  name = "github.com/klauspost/compress"
+  packages = ["flate"]
+  pruneopts = "UT"
+  revision = "b939724e787a27c0005cabe3f78e7ed7987ac74f"
+  version = "v1.4.0"
+
+[[projects]]
+  digest = "1:4ea0668d490ca32a38366453a486e2e8c60fbdaf1f2607c96b4a093d8a5c8de7"
+  name = "github.com/klauspost/cpuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ae7887de9fa5d2db4eaa8174a7eff2c1ac00f2da"
+  version = "v1.1"
+
+[[projects]]
+  digest = "1:1e5bf9cae557702ebbd51a32a94b47e3d1a20b7637682be08da8cf62152ec781"
+  name = "github.com/klauspost/crc32"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "cb6bfca970f6908083f26f39a79009d608efd5cd"
+  version = "v1.1"
+
+[[projects]]
+  digest = "1:485c95e36c287cdafed03bcde883d5129e26100bbb19b448fb9b4de4e5baf7e4"
+  name = "github.com/klauspost/pgzip"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "0bf5dcad4ada2814c3c00f996a982270bb81a506"
+  version = "v1.1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:f44d34fda864bed6d6c71514cd40b2ee097e6e67f745d5d014113e1faa5af8b7"
+  name = "github.com/konsorten/go-windows-terminal-sequences"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "b729f2633dfe35f4d1d8a32385f6685610ce1cb5"
+
+[[projects]]
   branch = "master"
   digest = "1:84a5a2b67486d5d67060ac393aa255d05d24ed5ee41daecd5635ec22657b6492"
   name = "github.com/mailru/easyjson"
@@ -226,6 +282,29 @@
   pruneopts = "UT"
   revision = "c12348ce28de40eed0136aa2b644d0ee0650e56c"
   version = "v1.0.1"
+
+[[projects]]
+  digest = "1:66917113d25f811af092599123662fe8e1b9eebdc4057a2eedf9b9f1ca00d76a"
+  name = "github.com/minio/minio-go"
+  packages = [
+    ".",
+    "pkg/credentials",
+    "pkg/encrypt",
+    "pkg/s3signer",
+    "pkg/s3utils",
+    "pkg/set",
+  ]
+  pruneopts = "UT"
+  revision = "e8c97c88468e122f161683409cde02dc89a2961c"
+  version = "v6.0.7"
+
+[[projects]]
+  digest = "1:78bbb1ba5b7c3f2ed0ea1eab57bdd3859aec7e177811563edc41198a760b06af"
+  name = "github.com/mitchellh/go-homedir"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ae18d6b8b3205b561c79e8e5f69bff09736185f4"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:33422d238f147d247752996a26574ac48dcf472976eda7f5134015f06bf16563"
@@ -303,6 +382,14 @@
   revision = "7d6f385de8bea29190f15ba9931442a0eaef9af7"
 
 [[projects]]
+  digest = "1:dc2d85c13ac22c22a1f3170a41a8e1b897fa05134aaf533f16df44f66a25b4a1"
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a67f783a3814b8729bd2dac5780b5f78f8dbd64d"
+  version = "v1.1.0"
+
+[[projects]]
   digest = "1:9424f440bba8f7508b69414634aef3b2b3a877e522d8a4624692412805407bb7"
   name = "github.com/spf13/pflag"
   packages = ["."]
@@ -312,9 +399,13 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:3f3a05ae0b95893d90b9b3b5afdb79a9b3d96e4e36e099d841ae602e4aca0da8"
+  digest = "1:57fc8065a25e45bda6925e55b69a8ea2eb2e449d0bb69643346e70afd2f7d2ed"
   name = "golang.org/x/crypto"
-  packages = ["ssh/terminal"]
+  packages = [
+    "argon2",
+    "blake2b",
+    "ssh/terminal",
+  ]
   pruneopts = "UT"
   revision = "c126467f60eb25f8f27e5a981f32a87e3965053f"
 
@@ -333,9 +424,10 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:8742e6e73627b2877c3f723bc1823d5667ec59011242480309dc90fa862512aa"
+  digest = "1:a220a85c72a6cb7339c412cb2b117019a7fd94007cdfffb3b5b1d058227a2bf8"
   name = "golang.org/x/sys"
   packages = [
+    "cpu",
     "unix",
     "windows",
   ]
@@ -532,6 +624,8 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/klauspost/pgzip",
+    "github.com/minio/minio-go",
     "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/push",
     "k8s.io/api/core/v1",
