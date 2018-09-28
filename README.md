@@ -15,6 +15,8 @@ All the configuration needed can be done via environment variables:
 * `KEEP_TAG` what tags should be kept **Not yet implemented**
 * `PROM_URL` Prometheus push gateway url
 * `BACKUP_DIR` directory that should get backed up, default: `/data`
+* `STATS_URL` url where additional afte backup stats get pushed to
+* `BACKUP_LIST_TIMEOUT` set the timeout for listing snapshots, default 30 secs
 
 ## Execution
 First build the container:
