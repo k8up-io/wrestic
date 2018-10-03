@@ -17,6 +17,11 @@ All the configuration needed can be done via environment variables:
 * `BACKUP_DIR` directory that should get backed up, default: `/data`
 * `STATS_URL` url where additional afte backup stats get pushed to
 * `BACKUP_LIST_TIMEOUT` set the timeout for listing snapshots, default 30 secs
+* `RESTORE_S3ENDPOINT` s3 endpoint where the tar.gz with all files should be uploaded, example `http://localhost:9000/bucketName`
+* `RESTORE_ACCESSKEYID` s3 accesKeyID for the restore s3 endpoint
+* `RESTORE_SECRETACCESSKEY` s3 secretAccessKey for the restore s3 endpoint
+
+Configuration for the Restic repository also has to be provided via env variables. See the official [docs](https://restic.readthedocs.io/en/latest/).
 
 ## Execution
 First build the container:
