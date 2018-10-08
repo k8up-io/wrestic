@@ -103,7 +103,7 @@
         "args":[
             "-restore",
             "-restoreFilter",
-            "/Users/simonbeck/Desktop/data/test",
+            "/Users/simonbeck/Desktop/data/output.tar.gz",
             "-restoreType",
             "s3",
         ],
@@ -118,6 +118,7 @@
             "RESTORE_S3ENDPOINT":"http://localhost:9000/restore",
             "RESTORE_ACCESSKEYID":"8U0UDNYPNUDTUS1LIAF3",
             "RESTORE_SECRETACCESSKEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+            "STATS_URL": "http://localhost:8091",
         }
       }
   ]
