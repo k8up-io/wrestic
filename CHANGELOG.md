@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- Wenhook after S3 restore
+- Webhook after S3 restore
+### Changed
+- Refactoring code, every command has now its own go file
 
 ## [v0.0.5] - 2018-09-28
 ### Added

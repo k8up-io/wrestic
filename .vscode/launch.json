@@ -20,6 +20,7 @@
             "PROM_URL":"http://localhost:9091/",
             "HOSTNAME":"test",
             "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
+            "STATS_URL": "http://localhost:8091",
         }
       },
       {
