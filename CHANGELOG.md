@@ -6,8 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.0.6] - 2018-11-1
 ### Added
 - Webhook after S3 restore
+- Archive command
 ### Changed
 - Refactoring code, every command has now its own go file
 
@@ -41,7 +44,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Improved error detection and various bugfixes
 - Timeout for initial snapshot listing, default: 30s
 
-[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.0.5...master
+[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.0.6...master
+[v0.0.6]: https://git.vshn.net/vshn/wrestic/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://git.vshn.net/vshn/wrestic/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://git.vshn.net/vshn/wrestic/compare/v0.0.3...v0.0.4
 [v0.0.3]: https://git.vshn.net/vshn/wrestic/compare/v0.0.2...v0.0.3
