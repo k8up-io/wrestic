@@ -25,3 +25,5 @@ gen### Go template
 /cmd/*/debug
 /cmd/wrestic/wrestic
 *.DS_Store
+
+.env
