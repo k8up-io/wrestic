@@ -49,7 +49,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Improved error detection and various bugfixes
 - Timeout for initial snapshot listing, default: 30s
 
-[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.0.6...master
+[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.0.7...master
+[v0.0.7]: https://git.vshn.net/vshn/wrestic/compare/v0.0.6...v0.0.7
 [v0.0.6]: https://git.vshn.net/vshn/wrestic/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://git.vshn.net/vshn/wrestic/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://git.vshn.net/vshn/wrestic/compare/v0.0.3...v0.0.4
