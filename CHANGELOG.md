@@ -6,11 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.0.7] - 2018-11-08
 ### Changed
 - Update snapshot webhook after every command that may change the repository
 - Create a snapshot for each folder in /data
 
-## [v0.0.6] - 2018-11-1
+## [v0.0.6] - 2018-11-01
 ### Added
 - Webhook after S3 restore
 - Archive command
