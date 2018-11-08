@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - Update snapshot webhook after every command that may change the repository
+- Create a snapshot for each folder in /data
 
 ## [v0.0.6] - 2018-11-1
 ### Added
