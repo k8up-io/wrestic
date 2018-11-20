@@ -53,7 +53,7 @@
         "args": [
             "-stdin",
             "-arrayOpts",
-            "mysqldump -uroot -psecure --all-databases,mariadb-6665df48c4-mz58z,mariadb,myproject",
+            "/bin/bash -c 'mysqldump --all-databases -h$MARIADB_HOST -u$MARIADB_USERNAME -p$MARIADB_PASSWORD',cli-41-84ffx,cli,govcms-site-master",
         ],
         "port": 2345,
         "host": "127.0.0.1",

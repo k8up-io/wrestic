@@ -17,4 +17,4 @@ COPY . .
 
 RUN go install -v ./...
 
-ENTRYPOINT [ "/go/src/git.vshn.net/vshn/wrestic/run.sh" ]
+ENTRYPOINT [ "/go/bin/wrestic" ]

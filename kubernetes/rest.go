@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"firepear.net/qsplit"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
@@ -46,9 +47,12 @@ func PodExec(params Params) (io.Reader, error) {
 		return nil, err
 	}
 
+	command := qsplit.ToStrings([]byte(params.BackupCommand))
+	fmt.Printf("Backup command: %v\n", strings.Join(command, ", "))
+
 	parameterCodec := runtime.NewParameterCodec(scheme)
 	req.VersionedParams(&apiv1.PodExecOptions{
-		Command:   strings.Fields(params.BackupCommand),
+		Command:   command,
 		Container: params.Container,
 		Stdin:     false,
 		Stdout:    true,
