@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:125d38433124890b1c5dfa69c637626a2f8cb8302658d4807628c81694a77ca5"
+  name = "firepear.net/qsplit"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "7fd1398c08bb618972bd116269625b92f3c1ec00"
+
+[[projects]]
   digest = "1:d1665c44bd5db19aaee18d1b6233c99b0b9a986e8bccb24ef54747547a48027f"
   name = "github.com/PuerkitoBio/purell"
   packages = ["."]
@@ -624,6 +632,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "firepear.net/qsplit",
     "github.com/klauspost/pgzip",
     "github.com/minio/minio-go",
     "github.com/prometheus/client_golang/prometheus",
