@@ -28,12 +28,12 @@ type Params struct {
 
 // PodExec sends the command to the specified pod
 // and returns a bytes buffer with the stdout
-func PodExec(params Params) (io.Reader, error) {
+func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
 	config, _ := getClientConfig()
 	k8sclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+		return nil, nil, err
 	}
 
 	req := k8sclient.Core().RESTClient().Post().
@@ -44,7 +44,7 @@ func PodExec(params Params) (io.Reader, error) {
 	scheme := runtime.NewScheme()
 	if err := apiv1.AddToScheme(scheme); err != nil {
 		fmt.Println(err)
-		return nil, err
+		return nil, nil, err
 	}
 
 	command := qsplit.ToStrings([]byte(params.BackupCommand))
@@ -63,7 +63,7 @@ func PodExec(params Params) (io.Reader, error) {
 	exec, err := remotecommand.NewSPDYExecutor(config, "POST", req.URL())
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+		return nil, nil, err
 	}
 
 	var stderr bytes.Buffer
@@ -78,12 +78,14 @@ func PodExec(params Params) (io.Reader, error) {
 
 		if err != nil {
 			fmt.Println(err)
-			// return nil, err
+			stdoutReader.CloseWithError(err)
+			stdoutWriter.CloseWithError(err)
+			return
 		}
 		stdoutWriter.Close()
 	}()
 
-	return stdoutReader, nil
+	return stdoutReader, &stderr, nil
 }
 
 func getClientConfig() (*rest.Config, error) {
