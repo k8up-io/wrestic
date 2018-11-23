@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Handle backup command quoting correctly
 ### Changed
 - Don't run a shell in the Docker container
+- Fail the whole backup job, if a single stdin/folder backup failed
 
 ## [v0.0.7] - 2018-11-08
 ### Changed
