@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Fixed
 - Handle backup command quoting correctly
+- Exit code 1 on SIGTERM
 ### Changed
 - Don't run a shell in the Docker container
 - Fail the whole backup job, if a single stdin/folder backup failed
