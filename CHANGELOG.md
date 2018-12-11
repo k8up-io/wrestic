@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Fixed
 - Remove default unlock as this causes race conditions
+### Added
+- Ability to accept file extension for the stdin backup
 
 ## [v0.0.8] - 2018-12-09
 ### Fixed
