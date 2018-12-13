@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove default unlock as this causes race conditions
 ### Added
 - Ability to accept file extension for the stdin backup
+### Changed
+- Increased timeout to 300 sec
 
 ## [v0.0.8] - 2018-12-09
 ### Fixed
