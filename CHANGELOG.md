@@ -14,6 +14,7 @@ compatibility with older operator versions. Changes to the design contain:
 
 ### Fixed
 - Remove default unlock as this causes race conditions
+- Archives not restoring all PVCs
 ### Added
 - Ability to accept file extension for the stdin backup
 ### Changed
