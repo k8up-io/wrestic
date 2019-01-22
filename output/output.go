@@ -73,7 +73,7 @@ func (o *Output) Register(out Outputter) {
 func (o *Output) TriggerAll() {
 	for _, out := range o.outputers {
 		if out.GetError() != nil {
-			fmt.Printf("Error occurred: %v command output:\n", out.GetError())
+			fmt.Printf("Error occurred: %v\n command output:\n", out.GetError())
 			fmt.Println(strings.Join(out.GetStdErrOut(), "\n"))
 		}
 		for _, prom := range out.ToProm() {
@@ -83,6 +83,7 @@ func (o *Output) TriggerAll() {
 		}
 		for _, hook := range out.GetWebhookData() {
 			if hook != nil {
+				fmt.Printf("Sending webhooks to %v: ", o.webhookPusher.url)
 				o.TriggerHook(hook)
 			}
 		}
@@ -96,5 +97,10 @@ func (o *Output) TriggerProm(prom prometheus.Collector) {
 
 // TriggerHook pushes a single json
 func (o *Output) TriggerHook(data JsonMarshaller) {
-	o.webhookPusher.Push(data)
+	err := o.webhookPusher.Push(data)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("done")
+	}
 }
