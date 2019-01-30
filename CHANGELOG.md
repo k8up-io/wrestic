@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [v0.9.0]
+## [v0.0.9] - 2019-01-30
 This change contains a complete redesign of wrestic. While keeping backwards
 compatibility with older operator versions. Changes to the design contain:
 - Better output handling (Webhook/prometheus/errors)
