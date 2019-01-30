@@ -73,3 +73,13 @@ func (c *Client) Upload(object UploadObject) error {
 	_, err := c.minioClient.PutObject(c.bucket, object.Name, object.ObjectStream, -1, minio.PutObjectOptions{})
 	return err
 }
+
+// Get gets a file or returns an error.
+func (c *Client) Get(filename string) (*minio.Object, error) {
+	return c.minioClient.GetObject(c.bucket, filename, minio.GetObjectOptions{})
+}
+
+// Stat returns metainformation about an object in the repository.
+func (c *Client) Stat(filename string) (minio.ObjectInfo, error) {
+	return c.minioClient.StatObject(c.bucket, filename, minio.StatObjectOptions{})
+}

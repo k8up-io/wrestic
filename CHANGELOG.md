@@ -6,10 +6,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+This change contains a complete redesign of wrestic. While keeping backwards
+compatibility with older operator versions. Changes to the design contain:
+- Better output handling (Webhook/prometheus/errors)
+- No more snapshot listings in order to initialise the repository
+- Created an API for the restic commandline
+
 ### Fixed
 - Remove default unlock as this causes race conditions
+- Archives not restoring all PVCs
 ### Added
 - Ability to accept file extension for the stdin backup
+### Changed
+- Redesigned wrestic
+- Removed timeout for snapshot list altogether
 
 ## [v0.0.8] - 2018-12-09
 ### Fixed
