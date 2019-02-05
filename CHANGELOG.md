@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - Unlock before and after each restic action
+- Don't add timestamps to the stdin backups
 
 ## [v0.0.9] - 2019-01-30
 This change contains a complete redesign of wrestic. While keeping backwards
