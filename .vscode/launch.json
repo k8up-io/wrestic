@@ -12,6 +12,7 @@
         "program": "${workspaceFolder}/cmd/wrestic/main.go",
         "port": 2345,
         "host": "127.0.0.1",
+        "showGlobalVariables": false,
         "env": {
             "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas1",
             "RESTIC_PASSWORD": "asdf",
@@ -21,6 +22,7 @@
             "HOSTNAME":"test",
             "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
             "STATS_URL": "http://localhost:8091",
+            "NAMESPACE": "myproject",
         }
       },
       {
@@ -53,13 +55,13 @@
         "args": [
             "-stdin",
             "-arrayOpts",
-            "/bin/bash -c 'mysqldump --all-databases -h$MARIADB_HOST -u$MARIADB_USERNAME -p$MARIADB_PASSWORD',cli-41-84ffx,cli,govcms-site-master",
+            "/bin/bash -c 'mysqldump -uroot -psecure --all-databases',mariadb-77bf4956b9-klkt7,mariadb,myproject",
         ],
         "port": 2345,
         "host": "127.0.0.1",
         "env": {
-            "RESTIC_REPOSITORY": "s3:http://10.144.1.133:9000/baas1",
-            "RESTIC_PASSWORD": "asdf",
+            "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas",
+            "RESTIC_PASSWORD": "password",
             "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
             "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
             "PROM_URL":"http://localhost:9091/",
@@ -103,10 +105,12 @@
             "-restore",
             "-restoreType",
             "s3",
+            "-restoreSnap",
+            "7a24ca037aa01b9ceaf3d4be189dddb2ecfedf603217970a8f2027609797f4b1",
         ],
         "env": {
-            "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas1",
-            "RESTIC_PASSWORD": "asdf",
+            "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas",
+            "RESTIC_PASSWORD": "password",
             "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
             "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
             "PROM_URL":"http://localhost:9091/",
