@@ -84,3 +84,28 @@ func (c *Client) Get(filename string) (*minio.Object, error) {
 func (c *Client) Stat(filename string) (minio.ObjectInfo, error) {
 	return c.minioClient.StatObject(c.bucket, filename, minio.StatObjectOptions{})
 }
+
+// DeleteBucket deletes the bucket
+func (c *Client) DeleteBucket() error {
+	return c.minioClient.RemoveBucket(c.bucket)
+}
+
+// ListObjects lists all objects in the bucket
+func (c *Client) ListObjects() ([]minio.ObjectInfo, error) {
+	doneCh := make(chan struct{})
+
+	defer close(doneCh)
+
+	tmpInfos := []minio.ObjectInfo{}
+
+	isRecursive := true
+	objectCh := c.minioClient.ListObjectsV2(c.bucket, "", isRecursive, doneCh)
+	for object := range objectCh {
+		if object.Err != nil {
+			return nil, object.Err
+		}
+		tmpInfos = append(tmpInfos, object)
+	}
+
+	return tmpInfos, nil
+}
