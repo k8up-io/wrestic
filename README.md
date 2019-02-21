@@ -1,6 +1,6 @@
 # Wrestic
 
-Wrapper for restic.
+Wrapper for restic. This is the backup runner of k8up. Documentation coming soon.
 
 ## Configuration
 All the configuration needed can be done via environment variables:
