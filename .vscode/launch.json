@@ -36,6 +36,7 @@
           ],
           "port": 2345,
           "host": "127.0.0.1",
+          "showGlobalVariables": false,
           "env": {
               "RESTIC_REPOSITORY": "s3:http://10.144.1.133:9000/baas1",
               "RESTIC_PASSWORD": "asdf",
@@ -46,29 +47,6 @@
               "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
           }
       },
-      {
-        "name": "Launch restic stdin",
-        "type": "go",
-        "request": "launch",
-        "mode": "debug",
-        "program": "${workspaceFolder}/cmd/wrestic/main.go",
-        "args": [
-            "-stdin",
-            "-arrayOpts",
-            "/bin/bash -c 'mysqldump -uroot -psecure --all-databases',mariadb-77bf4956b9-klkt7,mariadb,myproject",
-        ],
-        "port": 2345,
-        "host": "127.0.0.1",
-        "env": {
-            "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas",
-            "RESTIC_PASSWORD": "password",
-            "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
-            "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
-            "PROM_URL":"http://localhost:9091/",
-            "HOSTNAME":"test",
-            "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
-        }
-    },
     {
         "name": "Launch restic restore folder",
         "type": "go",
@@ -76,6 +54,7 @@
         "mode": "debug",
         "program": "${workspaceFolder}/cmd/wrestic/main.go",
         "port": 2345,
+        "showGlobalVariables": false,
         "host": "127.0.0.1",
         "args":[
             "-restore",
@@ -98,6 +77,7 @@
         "type": "go",
         "request": "launch",
         "mode": "debug",
+        "showGlobalVariables": false,
         "program": "${workspaceFolder}/cmd/wrestic/main.go",
         "port": 2345,
         "host": "127.0.0.1",
@@ -127,6 +107,7 @@
         "type": "go",
         "request": "launch",
         "mode": "debug",
+        "showGlobalVariables": false,
         "program": "${workspaceFolder}/cmd/wrestic/main.go",
         "port": 2345,
         "host": "127.0.0.1",
@@ -154,6 +135,7 @@
         "type": "go",
         "request": "launch",
         "mode": "debug",
+        "showGlobalVariables": false,
         "program": "${workspaceFolder}/cmd/wrestic/main.go",
         "port": 2345,
         "host": "127.0.0.1",
