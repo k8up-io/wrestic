@@ -1,0 +1,40 @@
+language: minimal
+
+services:
+  - docker
+
+env:
+  global:
+    - IMAGE_NAME="vshn/wrestic"
+    - IMAGE_NAME_DOCKER_HUB="appuio/wrestic"
+
+before_script:
+  - docker info
+  - echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
+
+script:
+  - docker build .
+        -t docker.io/${IMAGE_NAME_DOCKER_HUB}:${IMAGE_TAG}
+  - docker push docker.io/${IMAGE_NAME_DOCKER_HUB}:${IMAGE_TAG}
+
+stages:
+  - name: dev
+    if: branch = dev
+  - name: latest
+    if: branch = master
+  - name: tag
+    if: tag IS present
+
+jobs:
+  include:
+    - stage: dev
+      env:
+        - IMAGE_TAG=dev
+
+    - stage: latest
+      env:
+        - IMAGE_TAG=latest
+
+    - stage: tag
+      env:
+        - IMAGE_TAG="${TRAVIS_TAG}"
