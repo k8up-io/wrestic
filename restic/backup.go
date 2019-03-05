@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path"
 	"strconv"
@@ -17,14 +18,15 @@ import (
 // BackupStruct holds the state of a backup command.
 type BackupStruct struct {
 	genericCommand
-	folderList     []string
-	backupDir      string
-	rawMetrics     []rawMetrics
-	snapshotLister *ListSnapshotsStruct
-	parsed         bool
-	startTimeStamp int64
-	endTimeStamp   int64
-	snapshots      []Snapshot
+	folderList        []string
+	backupDir         string
+	rawMetrics        []rawMetrics
+	snapshotLister    *ListSnapshotsStruct
+	parsed            bool
+	startTimeStamp    int64
+	endTimeStamp      int64
+	snapshots         []Snapshot
+	stdinErrorMessage error
 }
 
 type rawMetrics struct {
@@ -46,9 +48,10 @@ type rawMetrics struct {
 }
 
 type WebhookStats struct {
-	Name          string     `json: "name"`
-	BackupMetrics rawMetrics `json:"backup_metrics"`
-	Snapshots     []Snapshot `json:"snapshots"`
+	Name          string     `json:"name,omitempty"`
+	BucketName    string     `json:"bucket_name,omitempty"`
+	BackupMetrics rawMetrics `json:"backup_metrics,omitempty"`
+	Snapshots     []Snapshot `json:"snapshots,omitempty"`
 }
 
 type promMetrics struct {
@@ -146,16 +149,31 @@ func (b *BackupStruct) StdinBackup(backupCommand, pod, container, namespace, fil
 	tmpMetrics.hostname = os.Getenv(Hostname)
 	b.rawMetrics = append(b.rawMetrics, tmpMetrics)
 	b.snapshots = b.snapshotLister.ListSnapshots(false)
+	b.stdinErrorMessage = b.errorMessage
+	b.errorMessage = nil
 }
 
 // GetWebhookData a slice of objects that should be sent to the webhook endpoint.
 func (b *BackupStruct) GetWebhookData() []output.JsonMarshaller {
 	stats := make([]output.JsonMarshaller, 0)
 
+	var bucket string
+	name := os.Getenv(Hostname)
+
+	repo := strings.Replace(os.Getenv(repositoryEnv), "s3:", "", 1)
+
+	u, err := url.Parse(repo)
+	if err != nil {
+		bucket = ""
+	} else {
+		bucket = strings.Replace(u.Path, "/", "", 1)
+	}
+
 	for _, stat := range b.rawMetrics {
 		stats = append(stats, &WebhookStats{
-			Name:          os.Getenv(Hostname),
+			Name:          name,
 			BackupMetrics: stat,
+			BucketName:    bucket,
 			Snapshots:     b.snapshots,
 		})
 	}
@@ -319,4 +337,26 @@ func (b *BackupStruct) newPromMetrics() *promMetrics {
 func (w *WebhookStats) ToJson() []byte {
 	jsonData, _ := json.Marshal(w)
 	return jsonData
+}
+
+// GetError returns if there was an error either in the stdin or normal backup.
+func (b *BackupStruct) GetError() error {
+	var pvcErr error
+	var stdinErr error
+	var finalError error
+	if b.errorMessage != nil {
+		pvcErr = fmt.Errorf("pvc backup error: %v", b.errorMessage)
+		finalError = pvcErr
+	}
+
+	if b.stdinErrorMessage != nil {
+		stdinErr = fmt.Errorf("stdin backup error: %v", b.stdinErrorMessage)
+		finalError = pvcErr
+	}
+
+	if b.stdinErrorMessage != nil && b.errorMessage != nil {
+		finalError = fmt.Errorf("%v\n%v", pvcErr, stdinErr)
+	}
+
+	return finalError
 }

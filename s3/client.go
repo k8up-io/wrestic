@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/minio/minio-go"
+	minio "github.com/minio/minio-go"
 )
 
 // Client wraps the minio s3 client
@@ -60,7 +60,7 @@ func (c *Client) Connect() error {
 
 func (c *Client) createBucket() error {
 	exists, err := c.minioClient.BucketExists(c.bucket)
-	if !exists && err == nil {
+	if !exists && (err == nil || strings.Contains(err.Error(), "exist")) {
 		return c.minioClient.MakeBucket(c.bucket, "")
 	} else if err != nil {
 		return err

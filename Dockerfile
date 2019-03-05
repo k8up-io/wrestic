@@ -14,7 +14,7 @@ WORKDIR /tmp
 #     mkdir /.cache && chmod -R 777 /.cache
 
 RUN set -x; apk add --no-cache wget bzip2 ca-certificates git gcc && \
-    git clone https://github.com/Kidswiss/restic && cd restic \
+    git clone https://github.com/Kidswiss/restic && cd restic && \
     git checkout tar && go run -mod=vendor build.go -v && \
     mv restic /usr/local/bin/restic && chmod +x /usr/local/bin/restic && \
     mkdir /.cache && chmod -R 777 /.cache
