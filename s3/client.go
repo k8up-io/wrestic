@@ -60,6 +60,7 @@ func (c *Client) Connect() error {
 
 func (c *Client) createBucket() error {
 	exists, err := c.minioClient.BucketExists(c.bucket)
+	// Workaround for upstream bug -> australian s3 returns error on non existing bucket.
 	if !exists && (err == nil || strings.Contains(err.Error(), "exist")) {
 		return c.minioClient.MakeBucket(c.bucket, "")
 	} else if err != nil {
