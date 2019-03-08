@@ -85,9 +85,44 @@ func (c *Client) Stat(filename string) (minio.ObjectInfo, error) {
 	return c.minioClient.StatObject(c.bucket, filename, minio.StatObjectOptions{})
 }
 
-// DeleteBucket deletes the bucket
+// DeleteBucket deletes the main bucket where the client is connected to.
 func (c *Client) DeleteBucket() error {
-	return c.minioClient.RemoveBucket(c.bucket)
+	return c.deleteBucketByName(c.bucket)
+}
+
+// DeleteBucketByName deletes the bucket with the specified name
+func (c *Client) DeleteBucketByName(name string) error {
+	return c.deleteBucketByName(name)
+}
+
+func (c *Client) deleteBucketByName(name string) error {
+
+	objectsCh := make(chan string)
+
+	// Send object names that are needed to be removed to objectsCh
+	go func() {
+		defer close(objectsCh)
+
+		doneCh := make(chan struct{})
+
+		// Indicate to our routine to exit cleanly upon return.
+		defer close(doneCh)
+
+		// List all objects from a bucket-name with a matching prefix.
+		for object := range c.minioClient.ListObjects(name, "", true, doneCh) {
+			objectsCh <- object.Key
+		}
+	}()
+
+	// Call RemoveObjects API
+	errorCh := c.minioClient.RemoveObjects(name, objectsCh)
+
+	// Print errors received from RemoveObjects API
+	for e := range errorCh {
+		return fmt.Errorf("Failed to remove " + e.ObjectName + ", error: " + e.Err.Error())
+	}
+
+	return c.minioClient.RemoveBucket(name)
 }
 
 // ListObjects lists all objects in the bucket
