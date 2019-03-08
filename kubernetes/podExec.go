@@ -28,8 +28,7 @@ func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
 	config, _ := getClientConfig()
 	k8sclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		fmt.Println(err)
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("can't create k8s for exec: %v", err)
 	}
 
 	req := k8sclient.Core().RESTClient().Post().
@@ -39,8 +38,7 @@ func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
 		SubResource("exec")
 	scheme := runtime.NewScheme()
 	if err := apiv1.AddToScheme(scheme); err != nil {
-		fmt.Println(err)
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("can't add runtime scheme: %v", err)
 	}
 
 	command := qsplit.ToStrings([]byte(params.BackupCommand))

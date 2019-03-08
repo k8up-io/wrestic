@@ -30,6 +30,9 @@ type BackupPod struct {
 // NewPodLister returns a PodLister configured to find the defined annotations.
 func NewPodLister(backupCommandAnnotation, fileExtensionAnnotation, namespace string) *PodLister {
 	k8cli, err := newk8sClient()
+	if err != nil {
+		err = fmt.Errorf("can't create podLister: %v", err)
+	}
 	return &PodLister{
 		backupCommandAnnotation: backupCommandAnnotation,
 		fileExtensionAnnotation: fileExtensionAnnotation,
@@ -43,9 +46,13 @@ func NewPodLister(backupCommandAnnotation, fileExtensionAnnotation, namespace st
 func (p *PodLister) ListPods() ([]BackupPod, error) {
 	fmt.Printf("Listing all pods with annotation %v in namespace %v\n", p.backupCommandAnnotation, p.namespace)
 
+	if p.err != nil {
+		return nil, p.err
+	}
+
 	pods, err := p.k8scli.CoreV1().Pods(p.namespace).List(metav1.ListOptions{})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("can't list pods: %v", err)
 	}
 
 	foundPods := []BackupPod{}
