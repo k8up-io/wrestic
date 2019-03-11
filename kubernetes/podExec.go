@@ -6,7 +6,7 @@ import (
 	"io"
 	"strings"
 
-	"firepear.net/qsplit"
+	"github.com/firepear/qsplit"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"

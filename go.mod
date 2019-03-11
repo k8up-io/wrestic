@@ -1,7 +1,6 @@
 module git.vshn.net/vshn/wrestic
 
 require (
-	firepear.net/qsplit v0.0.0-20170727035607-7fd1398c08bb
 	github.com/PuerkitoBio/purell v1.1.0
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
 	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
@@ -10,6 +9,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/emicklei/go-restful v2.8.0+incompatible
 	github.com/emicklei/go-restful-swagger12 v0.0.0-20170208215640-dcef7f557305
+	github.com/firepear/qsplit v2.2.3+incompatible
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-ini/ini v1.38.2
 	github.com/go-openapi/jsonpointer v0.0.0-20180322222829-3a0015ad55fa
