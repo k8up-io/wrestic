@@ -1,0 +1,22 @@
+{
+  "go.testTags": "unit integration",
+  "go.testTimeout": "120s",
+  "go.testFlags": [
+    "-v",
+  ],
+  "go.testEnvVars": {
+    "RESTIC_REPOSITORY":"s3:http://localhost:9000/baas1",
+    "RESTIC_PASSWORD":"password",
+    "AWS_ACCESS_KEY_ID":"8U0UDNYPNUDTUS1LIAF3",
+    "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+    "BACKUP_DIR":"testdata",
+    "HOSTNAME":"test",
+    "STATS_URL":"http://localhost:8091",
+    "PROM_URL": "http://localhost:8090",
+    "RESTORE_ACCESSKEYID": "8U0UDNYPNUDTUS1LIAF3",
+    "RESTORE_SECRETACCESSKEY":"ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+    "RESTORE_S3ENDPOINT": "http://localhost:9000/restore",
+    "RESTORE_DIR":"/tmp/restore",
+    "RESTIC_BINARY": "/Users/simonbeck/repos/restic/cmd/restic/restic"
+  },
+}

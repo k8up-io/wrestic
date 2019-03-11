@@ -19,7 +19,7 @@
   * snapshot id
   * restored files
 * no prometheus
-* fail on single file if S3 restore due to tar corruption
+* fail on single file if S3 restore due to tar corruption (obsolete with AMZE-1290)
 * fail on repository issues (source and target)
 ## Archive
 * trigger s3 restore for the newest snapshot for each PVC/stdin

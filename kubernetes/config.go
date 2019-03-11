@@ -28,12 +28,11 @@ func getClientConfig() (*rest.Config, error) {
 func newk8sClient() (*kubernetes.Clientset, error) {
 	config, err := getClientConfig()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("can't load k8s config: %v", err)
 	}
 	k8sclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return nil, fmt.Errorf("can't create k8s client: %v", err)
 	}
 
 	return k8sclient, nil

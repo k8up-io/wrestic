@@ -27,3 +27,5 @@ gen### Go template
 *.DS_Store
 
 .env
+
+tmp/
