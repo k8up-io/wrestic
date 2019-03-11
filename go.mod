@@ -42,10 +42,15 @@ require (
 	github.com/prometheus/client_model v0.0.0-20171117100541-99fa1f4be8e5 // indirect
 	github.com/prometheus/common v0.0.0-20180518154759-7600349dcfe1 // indirect
 	github.com/prometheus/procfs v0.0.0-20180612222113-7d6f385de8be // indirect
+	github.com/saibing/bingo v0.0.0-20190310064048-d2248939f85e // indirect
 	github.com/sirupsen/logrus v1.1.0 // indirect
+	github.com/sourcegraph/jsonrpc2 v0.0.0-20190106185902-35a74f039c6a // indirect
 	github.com/spf13/pflag v1.0.1 // indirect
-	golang.org/x/net v0.0.0-20180730214132-a0f8a16cb08c // indirect
+	github.com/stretchr/objx v0.1.1 // indirect
+	golang.org/x/net v0.0.0-20190311031020-56fb01167e7d // indirect
+	golang.org/x/sys v0.0.0-20190310054646-10058d7d4faa // indirect
 	golang.org/x/text v0.3.0 // indirect
+	golang.org/x/tools v0.0.0-20190308174544-00c44ba9c14f // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.2.1 // indirect
 	k8s.io/api v0.0.0-20180103175015-389dfa299845

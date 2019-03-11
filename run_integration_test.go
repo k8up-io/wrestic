@@ -45,7 +45,7 @@ func teardown(t *testing.T, f func()) {
 
 func runIntegrationTests(t *testing.T) {
 	fmt.Println("=================== Starting tests ===================")
-	cmd := exec.Command("go", "test", "-v", "-tags", "integration", "./cmd/wrestic/...")
+	cmd := exec.Command("go", "test", "-v", "-mod", "vendor", "-tags", "integration", "./cmd/wrestic/...")
 	resticBin, _ := filepath.Abs(filepath.Join(tmpdir, "restic/restic"))
 	fmt.Println("Restic location", resticBin)
 	cmd.Env = append(os.Environ(),
