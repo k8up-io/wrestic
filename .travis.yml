@@ -1,0 +1,39 @@
+language: minimal
+
+services:
+  - docker
+
+env:
+  global:
+    - IMAGE_NAME="docker.io/${TRAVIS_REPO_SLUG}"
+
+before_script:
+  - docker info
+  - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
+
+script:
+  - docker build . -t docker.io/${IMAGE_NAME}:${IMAGE_TAG}
+
+deploy:
+  - provider: script
+    script: docker push docker.io/${IMAGE_NAME}:${IMAGE_TAG}
+    on:
+      condition: branch =~ ^dev|master$
+  - provider: script
+    script: docker push docker.io/${IMAGE_NAME}:${IMAGE_TAG}
+    on:
+      tags: true
+
+jobs:
+  include:
+    - if: branch = dev
+      env:
+        - IMAGE_TAG=dev
+
+    - if: branch = master
+      env:
+        - IMAGE_TAG=latest
+
+    - if: tag IS present
+      env:
+        - IMAGE_TAG="${TRAVIS_TAG}"
