@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.0.10] - 2019-04-05
 **Attention:** This release needs a custom version of Restic with the new dump
 system. An upstream Pullrequest is currently open, with any luck it should
 be merged for Restic 9.4+.
@@ -14,6 +16,13 @@ be merged for Restic 9.4+.
 - Unlock before and after each restic action
 - Don't add timestamps to the stdin backups
 - Use 'dump folder to tar' ability of restic for faster restores
+- More robust Bucket creation
+### Added
+- First iteration of integration tests
+- TravisCI
+- Pod lookup from within Wrestic
+### Fixed
+- Much faster restore to S3
 
 ## [v0.0.9] - 2019-01-30
 This change contains a complete redesign of wrestic. While keeping backwards
