@@ -18,7 +18,7 @@ deploy:
   - provider: script
     script: docker push ${IMAGE_NAME}:${IMAGE_TAG}
     on:
-      condition: branch =~ ^dev|master$
+      condition: branch =~ dev|master
   - provider: script
     script: docker push ${IMAGE_NAME}:${IMAGE_TAG}
     on:
