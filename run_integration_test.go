@@ -3,50 +3,63 @@ package main
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 )
 
 const (
-	tmpdir = "tmp"
-	secret = "password"
-	key    = "user"
-	repopw = "password"
-	repo   = "s3:http://localhost:9000/test"
+	secret        = "password"
+	key           = "user"
+	repopw        = "password"
+	repo          = "s3:http://localhost:9000/test"
+	resticVersion = "v0.9.5"
+	resticRepo    = "https://github.com/restic/restic/releases/download"
 )
 
 func TestIntegration(t *testing.T) {
-	killFunc := prepare(t)
-	runIntegrationTests(t)
+	tmpdir, err := ioutil.TempDir("", "wrestic")
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer os.RemoveAll(tmpdir)
+	killFunc := prepare(t, tmpdir)
+	runIntegrationTests(t, tmpdir)
 	teardown(t, killFunc)
 }
 
-func prepare(t *testing.T) func() {
+func prepare(t *testing.T, tmpdir string) func() {
 	fmt.Println("=================== Preparing test env ===================")
-	if _, ok := os.Stat(tmpdir); os.IsExist(ok) {
-		os.RemoveAll(tmpdir)
+
+	err := os.Mkdir(filepath.Join(tmpdir, "bin"), 0777)
+
+	if err != nil {
+		panic(err)
 	}
-	getMinio()
-	buildCustomRestic(t)
-	return runMinio(t)
+
+	getMinio(tmpdir)
+	getRestic(tmpdir)
+	return runMinio(t, tmpdir)
 }
 
 func teardown(t *testing.T, f func()) {
 	fmt.Println("=================== Tearing down test env ===================")
 	f()
-	os.RemoveAll(tmpdir)
 }
 
-func runIntegrationTests(t *testing.T) {
+func runIntegrationTests(t *testing.T, tmpdir string) {
 	fmt.Println("=================== Starting tests ===================")
 	cmd := exec.Command("go", "test", "-v", "-mod", "vendor", "-tags", "integration", "./cmd/wrestic/...")
-	resticBin, _ := filepath.Abs(filepath.Join(tmpdir, "restic/restic"))
+	resticBin, _ := filepath.Abs(filepath.Join(tmpdir, "bin", "restic"))
 	fmt.Println("Restic location", resticBin)
 	cmd.Env = append(os.Environ(),
 		"RESTIC_PASSWORD="+repopw,
@@ -61,61 +74,33 @@ func runIntegrationTests(t *testing.T) {
 		"RESTIC_BINARY="+resticBin,
 		"RESTORE_DIR="+filepath.Join(tmpdir, "restore"),
 	)
-	out, err := cmd.CombinedOutput()
-	fmt.Println(string(out))
+	addOutputs(cmd)
+	err := cmd.Run()
 	if err != nil {
 		t.Error(err)
 	}
 	fmt.Println("=================== Tests finished ===================")
 }
 
-func getMinio() error {
-	minioPath := filepath.Join(os.Getenv("GOPATH"), "bin", "minio")
+func getMinio(tmpdir string) {
 
-	if _, err := os.Stat(minioPath); !os.IsNotExist(err) {
+	fmt.Println("Downloading minio...")
+
+	minioPath := filepath.Join(tmpdir, "bin", "minio")
+
+	if _, err := os.Stat(minioPath); os.IsExist(err) {
 		fmt.Println("Minio already downloaded")
-		return nil
+		return
 	}
 
-	tempfile, err := os.Create(minioPath)
-	if err != nil {
-		return fmt.Errorf("create tempfile for minio download failed: %v", err)
-	}
-
-	url := fmt.Sprintf("https://dl.minio.io/server/minio/release/%s-%s/archive/minio.RELEASE.2019-03-06T22-47-10Z",
+	url := fmt.Sprintf("https://dl.minio.io/server/minio/release/%s-%s/minio",
 		runtime.GOOS, runtime.GOARCH)
-	fmt.Printf("downloading %v\n", url)
-	res, err := http.Get(url)
-	if err != nil {
-		return fmt.Errorf("error downloading minio server: %v", err)
-	}
 
-	_, err = io.Copy(tempfile, res.Body)
-	if err != nil {
-		return fmt.Errorf("error saving minio server to file: %v", err)
-	}
+	downloadBinary(minioPath, url)
 
-	err = res.Body.Close()
-	if err != nil {
-		return fmt.Errorf("error closing HTTP download: %v", err)
-	}
-
-	err = tempfile.Close()
-	if err != nil {
-		fmt.Printf("closing tempfile failed: %v\n", err)
-		return fmt.Errorf("error closing minio server file: %v", err)
-	}
-
-	err = os.Chmod(tempfile.Name(), 0755)
-	if err != nil {
-		return fmt.Errorf("chmod(minio-server) failed: %v", err)
-	}
-
-	fmt.Printf("downloaded minio server to %v\n", tempfile.Name())
-	return nil
 }
 
-func runMinio(t *testing.T) func() {
+func runMinio(t *testing.T, tmpdir string) func() {
 	configDir := filepath.Join(tmpdir, "config")
 	rootDir := filepath.Join(tmpdir, "root")
 
@@ -173,35 +158,70 @@ func getMinioEnv() []string {
 	}
 }
 
-func buildCustomRestic(t *testing.T) {
-	fmt.Println("Cloning restic")
-	clone := exec.Command("git", "clone", "https://github.com/Kidswiss/restic", "tmp/restic")
+func getRestic(tmpdir string) {
+	fmt.Println("Downloading restic")
 
-	out, err := clone.CombinedOutput()
+	bzipPath := filepath.Join(tmpdir, "bin", "restic.bz2")
+
+	cleanVer := strings.Replace(resticVersion, "v", "", 1)
+	url := fmt.Sprintf("%s/%s/restic_%s_%s_%s.bz2",
+		resticRepo, resticVersion, cleanVer, runtime.GOOS, runtime.GOARCH)
+
+	err := downloadBinary(bzipPath, url)
+
 	if err != nil {
-		t.Error(err)
+		panic(err)
 	}
 
-	fmt.Println(string(out))
+	extract := exec.Command("bzip2", "-d", bzipPath)
+	addOutputs(extract)
+	extract.Dir = filepath.Dir(bzipPath)
+	extract.Run()
 
-	checkout := exec.Command("git", "checkout", "tar")
-	checkout.Dir = "tmp/restic"
-	checkoutOut, err := checkout.CombinedOutput()
-	if err != nil {
-		t.Error(err)
+}
+
+func addOutputs(cmd *exec.Cmd) {
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+}
+
+func downloadBinary(binPath string, url string) error {
+	if _, err := os.Stat(binPath); os.IsExist(err) {
+		fmt.Println("Binary already downloaded")
+		return nil
 	}
 
-	fmt.Println(string(checkoutOut))
-
-	fmt.Println("Building restic")
-
-	build := exec.Command("go", "run", "-mod=vendor", "build.go", "-v")
-	build.Dir = "tmp/restic"
-
-	buildOut, err := build.CombinedOutput()
+	binFile, err := os.Create(binPath)
 	if err != nil {
-		t.Error(err)
+		return fmt.Errorf("create tempfile for download failed: %v", err)
+	}
+	fmt.Printf("downloading %v\n", url)
+	res, err := http.Get(url)
+	if err != nil {
+		return fmt.Errorf("error downloading: %v", err)
 	}
 
-	fmt.Println(string(buildOut))
+	_, err = io.Copy(binFile, res.Body)
+	if err != nil {
+		return fmt.Errorf("error saving to file: %v", err)
+	}
+
+	err = res.Body.Close()
+	if err != nil {
+		return fmt.Errorf("error closing HTTP download: %v", err)
+	}
+
+	err = binFile.Close()
+	if err != nil {
+		fmt.Printf("closing tempfile failed: %v\n", err)
+		return fmt.Errorf("error closing file: %v", err)
+	}
+
+	err = os.Chmod(binFile.Name(), 0755)
+	if err != nil {
+		return fmt.Errorf("chmod() failed: %v", err)
+	}
+
+	fmt.Printf("downloaded to %v\n", binFile.Name())
+	return nil
 }
