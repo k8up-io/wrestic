@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Webhook output now occurs after each PVC with metrics about that specific backup. The list with all the snapshots is sent after all PVCs finished. This should reduce the strain on webhook handling for very large backup sets.
 
 ## [v0.0.10] - 2019-04-05
 **Attention:** This release needs a custom version of Restic with the new dump
