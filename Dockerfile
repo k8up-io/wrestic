@@ -21,10 +21,11 @@ RUN go install -v ./...
 FROM docker.io/alpine:3
 WORKDIR /app
 
-RUN apk --no-cache add ca-certificates && mkdir /.cache && chmod -R g=u /.cache
+RUN mkdir /.cache && chmod -R g=u /.cache
+RUN apk --no-cache add ca-certificates
 
-COPY --from=build /go/bin/wrestic /app/
 COPY --from=build /usr/local/bin/restic /usr/local/bin/restic
+COPY --from=build /go/bin/wrestic /app/
 
 USER 1001
 
