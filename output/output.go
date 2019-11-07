@@ -92,15 +92,19 @@ func (o *Output) TriggerAll() {
 
 // TriggerProm pushes a prometheus collector
 func (o *Output) TriggerProm(prom prometheus.Collector) {
-	o.prometheusPusher.Update(prom)
+	if o.prometheusPusher.url != "" {
+		o.prometheusPusher.Update(prom)
+	}
 }
 
 // TriggerHook pushes a single json
 func (o *Output) TriggerHook(data JsonMarshaller) {
-	err := o.webhookPusher.Push(data)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("done")
+	if o.webhookPusher.url != "" {
+		err := o.webhookPusher.Push(data)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("done")
+		}
 	}
 }
