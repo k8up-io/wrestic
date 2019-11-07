@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Webhook output now occurs after each PVC with metrics about that specific backup. The list with all the snapshots is sent after all PVCs finished. This should reduce the strain on webhook handling for very large backup sets.
 - The PVC paths in the Restic snapshot get trimmed away, so we can seamlessly restore directly to a PVC without having to copy stuff around.
-### Fixed
-- Make the short ID usable in for the restore
+- Pass signals to the restic process
 - Use Restic 0.9.5
 - Realtime backup stats in container
+### Fixed
+- Make the short ID usable in for the restore
+
 
 ## [v0.0.10] - 2019-04-05
 **Attention:** This release needs a custom version of Restic with the new dump
