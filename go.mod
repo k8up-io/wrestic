@@ -58,3 +58,5 @@ require (
 	k8s.io/client-go v5.0.1+incompatible
 	k8s.io/kube-openapi v0.0.0-20180719232738-d8ea2fe547a4 // indirect
 )
+
+go 1.13
