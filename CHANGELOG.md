@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+# [v0.1.6] 2019-11-14
 ### Changed
+- Bring version on par with K8up
 - Webhook output now occurs after each PVC with metrics about that specific backup. The list with all the snapshots is sent after all PVCs finished. This should reduce the strain on webhook handling for very large backup sets.
 - The PVC paths in the Restic snapshot get trimmed away, so we can seamlessly restore directly to a PVC without having to copy stuff around.
 - Pass signals to the restic process
