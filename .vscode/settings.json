@@ -3,6 +3,7 @@
   "go.testTimeout": "120s",
   "go.testFlags": [
     "-v",
+    "--race",
   ],
   "go.testEnvVars": {
     "RESTIC_REPOSITORY":"s3:http://localhost:9000/baas1",
