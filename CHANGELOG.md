@@ -6,8 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.1.8] 2020-01-03
 ### Fixed
 - Using own restic fork with hotfix from https://github.com/restic/restic/issues/2319 in dockerbuild
+- Race condition that makes wrestic hang on certain OpenShift clusters
 
 ## [v0.1.7] 2019-11-18
 ### Fixed
