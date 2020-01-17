@@ -107,7 +107,7 @@ func runMinio(t *testing.T, tmpdir string) func() {
 	os.MkdirAll(configDir, 0700)
 	os.MkdirAll(rootDir, 0700)
 
-	cmd := exec.Command("minio",
+	cmd := exec.Command(filepath.Join(tmpdir, "bin", "minio"),
 		"server",
 		"--address", "127.0.0.1:9000",
 		"--config-dir", configDir,
