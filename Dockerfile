@@ -1,5 +1,7 @@
 FROM docker.io/golang:1.13-alpine as build
 
+ENV CGO_ENABLED=0
+
 RUN set -x; apk add --no-cache wget bzip2 ca-certificates git gcc && \
     git clone https://github.com/vshn/restic && cd restic && \
     git checkout 2319-dump-dir-tar && go run -mod=vendor build.go -v && \
@@ -9,6 +11,7 @@ RUN set -x; apk add --no-cache wget bzip2 ca-certificates git gcc && \
 WORKDIR /go/src/git.vshn.net/vshn/wrestic
 COPY . .
 
+RUN go test -v ./...
 RUN go install -v ./...
 
 # runtime image
