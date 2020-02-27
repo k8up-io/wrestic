@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - Use root in docker image to avoid permission issues
+### Added
+- Ability to pass tags to restic
 
 ## [v0.1.8] 2020-01-03
 ### Fixed
