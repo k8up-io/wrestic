@@ -2,7 +2,7 @@ FROM docker.io/golang:1.13-alpine as build
 
 RUN set -x; apk add --no-cache wget bzip2 ca-certificates git gcc && \
     git clone https://github.com/vshn/restic && cd restic && \
-    git checkout 2319-dump-dir-tar && go run -mod=vendor build.go -v && \
+    git checkout 2319-dump-dir-tar-rebase && go run -mod=vendor build.go -v && \
     mv restic /usr/local/bin/restic && chmod +x /usr/local/bin/restic && \
     mkdir /.cache && chmod -R 777 /.cache
 
