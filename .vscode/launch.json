@@ -20,7 +20,7 @@
             "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
             "PROM_URL":"http://localhost:9091/",
             "HOSTNAME":"test",
-            "BACKUP_DIR": "/Users/simonbeck/Desktop/data",
+            "BACKUP_DIR": "/Volumes/VMs/baas/data",
             "STATS_URL": "http://localhost:8091",
             "NAMESPACE": "myproject",
         }

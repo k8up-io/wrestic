@@ -3,7 +3,6 @@ package restic
 import (
 	"archive/tar"
 	"bytes"
-	"compress/gzip"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -250,11 +249,9 @@ func (r *RestoreStruct) s3Restore(snapshot Snapshot) error {
 
 func (r *RestoreStruct) compress(file tarStream, stats *restoreStats) io.Reader {
 	readPipe, writePipe := io.Pipe()
-	gzpWriter := gzip.NewWriter(writePipe)
 
 	go func() {
 		defer func() {
-			gzpWriter.Close()
 			writePipe.Close()
 		}()
 		stats.RestoredFiles = append(stats.RestoredFiles, file.path)
@@ -263,12 +260,12 @@ func (r *RestoreStruct) compress(file tarStream, stats *restoreStats) io.Reader 
 		reader := <-file.readerChan
 		var writer io.Writer
 		if file.tarHeader != nil {
-			tw := tar.NewWriter(gzpWriter)
+			tw := tar.NewWriter(writePipe)
 			tw.WriteHeader(file.tarHeader)
 			writer = tw
 			defer tw.Close()
 		} else {
-			writer = gzpWriter
+			writer = writePipe
 		}
 		_, err := io.Copy(writer, reader)
 		if err != nil {
