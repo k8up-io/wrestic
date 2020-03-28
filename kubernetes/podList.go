@@ -3,6 +3,7 @@ package kubernetes
 import (
 	"fmt"
 
+	"github.com/go-logr/logr"
 	kube "k8s.io/client-go/kubernetes"
 
 	corev1 "k8s.io/api/core/v1"
@@ -16,6 +17,7 @@ type PodLister struct {
 	k8scli                  *kube.Clientset
 	err                     error
 	namespace               string
+	log                     logr.Logger
 }
 
 // BackupPod contains all information nessecary to execute the backupcommands.
@@ -28,7 +30,7 @@ type BackupPod struct {
 }
 
 // NewPodLister returns a PodLister configured to find the defined annotations.
-func NewPodLister(backupCommandAnnotation, fileExtensionAnnotation, namespace string) *PodLister {
+func NewPodLister(backupCommandAnnotation, fileExtensionAnnotation, namespace string, log logr.Logger) *PodLister {
 	k8cli, err := newk8sClient()
 	if err != nil {
 		err = fmt.Errorf("can't create podLister: %v", err)
@@ -39,12 +41,13 @@ func NewPodLister(backupCommandAnnotation, fileExtensionAnnotation, namespace st
 		k8scli:                  k8cli,
 		err:                     err,
 		namespace:               namespace,
+		log:                     log.WithName("k8sClient"),
 	}
 }
 
 // ListPods resturns a list of pods which have backup commands in their annotations.
 func (p *PodLister) ListPods() ([]BackupPod, error) {
-	fmt.Printf("Listing all pods with annotation %v in namespace %v\n", p.backupCommandAnnotation, p.namespace)
+	p.log.Info("listing all pods", "annotation", p.backupCommandAnnotation, "namespace", p.namespace)
 
 	if p.err != nil {
 		return nil, p.err
@@ -74,7 +77,7 @@ func (p *PodLister) ListPods() ([]BackupPod, error) {
 
 			if _, ok := sameOwner[firstOwnerID]; !ok {
 				sameOwner[firstOwnerID] = true
-				fmt.Printf("Adding %v/%v to backuplist\n", p.namespace, pod.Name)
+				p.log.Info("adding to backup list", "namespace", p.namespace, "pod", pod.Name)
 				foundPods = append(foundPods, BackupPod{
 					Command:       command,
 					PodName:       pod.Name,

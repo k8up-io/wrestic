@@ -7,24 +7,19 @@ import (
 	"strings"
 
 	"github.com/firepear/qsplit"
+	"github.com/go-logr/logr"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/remotecommand"
 )
 
-// Params contains the necessary parameters
-// for the PodExec function
-type Params struct {
-	BackupCommand string
-	Pod           string
-	Container     string
-	Namespace     string
-}
-
 // PodExec sends the command to the specified pod
 // and returns a bytes buffer with the stdout
-func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
+func PodExec(pod BackupPod, log logr.Logger) (io.ReadCloser, *bytes.Buffer, error) {
+
+	execLogger := log.WithName("k8sExec")
+
 	config, _ := getClientConfig()
 	k8sclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
@@ -33,21 +28,21 @@ func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
 
 	req := k8sclient.Core().RESTClient().Post().
 		Resource("pods").
-		Name(params.Pod).
-		Namespace(params.Namespace).
+		Name(pod.PodName).
+		Namespace(pod.Namespace).
 		SubResource("exec")
 	scheme := runtime.NewScheme()
 	if err := apiv1.AddToScheme(scheme); err != nil {
 		return nil, nil, fmt.Errorf("can't add runtime scheme: %v", err)
 	}
 
-	command := qsplit.ToStrings([]byte(params.BackupCommand))
-	fmt.Printf("Backup command: %v\n", strings.Join(command, ", "))
+	command := qsplit.ToStrings([]byte(pod.Command))
+	execLogger.Info("executing command", "command", strings.Join(command, ", "), "namespace", pod.Namespace, "pod", pod.PodName)
 
 	parameterCodec := runtime.NewParameterCodec(scheme)
 	req.VersionedParams(&apiv1.PodExecOptions{
 		Command:   command,
-		Container: params.Container,
+		Container: pod.ContainerName,
 		Stdin:     false,
 		Stdout:    true,
 		Stderr:    true,
@@ -56,7 +51,6 @@ func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
 
 	exec, err := remotecommand.NewSPDYExecutor(config, "POST", req.URL())
 	if err != nil {
-		fmt.Println(err)
 		return nil, nil, err
 	}
 
@@ -70,13 +64,12 @@ func PodExec(params Params) (io.Reader, *bytes.Buffer, error) {
 			Tty:    false,
 		})
 
+		defer stdoutWriter.Close()
+
 		if err != nil {
-			fmt.Println(err)
-			stdoutReader.CloseWithError(err)
-			stdoutWriter.CloseWithError(err)
+			execLogger.Error(err, "error ocurred stream backup data", "namespace", pod.Namespace, "pod", pod.PodName)
 			return
 		}
-		stdoutWriter.Close()
 	}()
 
 	return stdoutReader, &stderr, nil

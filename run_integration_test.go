@@ -58,7 +58,7 @@ func teardown(t *testing.T, f func()) {
 
 func runIntegrationTests(t *testing.T, tmpdir string) {
 	fmt.Println("=================== Starting tests ===================")
-	cmd := exec.Command("go", "test", "-v", "--race", "-mod", "vendor", "-tags", "integration", "./cmd/wrestic/...")
+	cmd := exec.Command("go", "test", "-v", "--race", "-tags", "integration", "./cmd/wrestic/...")
 	resticBin, _ := filepath.Abs(filepath.Join(tmpdir, "bin", "restic"))
 	fmt.Println("Restic location", resticBin)
 	cmd.Env = append(os.Environ(),
@@ -217,7 +217,7 @@ func downloadBinary(binPath string, url string) error {
 		return fmt.Errorf("error closing file: %v", err)
 	}
 
-	err = os.Chmod(binFile.Name(), 0755)
+	err = os.Chmod(binFile.Name(), 0777)
 	if err != nil {
 		return fmt.Errorf("chmod() failed: %v", err)
 	}
