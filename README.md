@@ -20,8 +20,8 @@ All the configuration needed can be done via environment variables:
 * `RESTORE_S3ENDPOINT` s3 endpoint where the tar.gz with all files should be uploaded, example `http://localhost:9000/bucketName`
 * `RESTORE_ACCESSKEYID` s3 accesKeyID for the restore s3 endpoint
 * `RESTORE_SECRETACCESSKEY` s3 secretAccessKey for the restore s3 endpoint
-* `BACKUPCOMMAND_ANNOTATION` name of the backup command annotation, default: `appuio.ch/backupcommand`
-* `FILEEXTENSION_ANNOTATION` name of the file extension annotation, default: `backup.appuio.ch/file-extension`
+* `BACKUPCOMMAND_ANNOTATION` name of the backup command annotation, default: `k8up.syn.tools/backupcommand`
+* `FILEEXTENSION_ANNOTATION` name of the file extension annotation, default: `k8up.syn.tools/file-extension`
 
 Configuration for the Restic repository also has to be provided via env variables. See the official [docs](https://restic.readthedocs.io/en/latest/).
 
