@@ -14,9 +14,14 @@ import (
 	"k8s.io/client-go/tools/remotecommand"
 )
 
+type ExecData struct {
+	Reader io.ReadCloser
+	Done   chan bool
+}
+
 // PodExec sends the command to the specified pod
 // and returns a bytes buffer with the stdout
-func PodExec(pod BackupPod, log logr.Logger) (io.ReadCloser, *bytes.Buffer, error) {
+func PodExec(pod BackupPod, log logr.Logger) (*ExecData, *bytes.Buffer, error) {
 
 	execLogger := log.WithName("k8sExec")
 
@@ -56,6 +61,7 @@ func PodExec(pod BackupPod, log logr.Logger) (io.ReadCloser, *bytes.Buffer, erro
 
 	var stderr bytes.Buffer
 	var stdoutReader, stdoutWriter = io.Pipe()
+	done := make(chan bool, 1)
 	go func() {
 		err = exec.Stream(remotecommand.StreamOptions{
 			Stdin:  nil,
@@ -65,6 +71,7 @@ func PodExec(pod BackupPod, log logr.Logger) (io.ReadCloser, *bytes.Buffer, erro
 		})
 
 		defer stdoutWriter.Close()
+		done <- true
 
 		if err != nil {
 			execLogger.Error(err, "error ocurred stream backup data", "namespace", pod.Namespace, "pod", pod.PodName)
@@ -72,5 +79,10 @@ func PodExec(pod BackupPod, log logr.Logger) (io.ReadCloser, *bytes.Buffer, erro
 		}
 	}()
 
-	return stdoutReader, &stderr, nil
+	data := &ExecData{
+		Done:   done,
+		Reader: stdoutReader,
+	}
+
+	return data, &stderr, nil
 }

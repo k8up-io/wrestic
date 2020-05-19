@@ -16,12 +16,12 @@
         "env": {
             "RESTIC_REPOSITORY": "s3:http://localhost:9000/baas1",
             "RESTIC_PASSWORD": "asdf",
-            "AWS_ACCESS_KEY_ID": "minioadmin",
-            "AWS_SECRET_ACCESS_KEY": "minioadmin",
-            // "PROM_URL":"http://localhost:9091/",
-            "HOSTNAME":"gaga",
-            "BACKUP_DIR": "/Users/kid/Scratch/wrestic/data",
-            "STATS_URL": "http://localhost:8091",
+            "AWS_ACCESS_KEY_ID": "8U0UDNYPNUDTUS1LIAF3",
+            "AWS_SECRET_ACCESS_KEY": "ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
+            "PROM_URL":"http://localhost:9000/",
+            "HOSTNAME":"myproject",
+            "BACKUP_DIR": "/Volumes/VMs/baas/data",
+            "STATS_URL": "http://localhost:9000",
         }
       },
       {
