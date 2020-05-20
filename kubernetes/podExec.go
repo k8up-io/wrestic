@@ -15,7 +15,7 @@ import (
 )
 
 type ExecData struct {
-	Reader io.ReadCloser
+	Reader *io.PipeReader
 	Done   chan bool
 }
 

@@ -37,4 +37,6 @@ RUN apk --no-cache add ca-certificates
 COPY --from=build /usr/local/bin/restic /usr/local/bin/restic
 COPY --from=build /go/bin/wrestic /app/
 
+# USER 1001
+
 ENTRYPOINT [ "./wrestic" ]
