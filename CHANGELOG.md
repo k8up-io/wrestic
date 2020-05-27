@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
-- Complete rewrite of the whole wrestic
+- Complete rewrite of whole wrestic
+- Better logging
+- Better code design
+- Better error handling
+- Better maintainability
+- Less deadlock potential with command IOs
 
 ## [v0.1.9] 2020-05-04
 ### Changed
