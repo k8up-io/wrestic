@@ -1,9 +1,10 @@
 {
-  "go.testTags": "unit integration",
+  "go.testTags": "integration",
   "go.testTimeout": "120s",
   "go.testFlags": [
     "-v",
     "--race",
+    "--count=1",
   ],
   "go.testEnvVars": {
     "RESTIC_REPOSITORY":"s3:http://localhost:9000/baas1",
@@ -13,11 +14,11 @@
     "BACKUP_DIR":"testdata",
     "HOSTNAME":"test",
     "STATS_URL":"http://localhost:8091",
-    "PROM_URL": "http://localhost:8090",
+    // "PROM_URL": "http://localhost:8090",
     "RESTORE_ACCESSKEYID": "8U0UDNYPNUDTUS1LIAF3",
     "RESTORE_SECRETACCESSKEY":"ip3cdrkXcHmH4S7if7erKPNoxDn27V0vrg6CHHem",
     "RESTORE_S3ENDPOINT": "http://localhost:9000/restore",
     "RESTORE_DIR":"/tmp/restore",
-    "RESTIC_BINARY": "/Users/simonbeck/repos/restic/cmd/restic/restic"
+    "RESTIC_BINARY": "/usr/local/bin/restic"
   },
 }

@@ -36,6 +36,9 @@ func New(endpoint, accessKeyID, secretAccessKey string) *Client {
 func (c *Client) Connect() error {
 
 	u, err := url.Parse(c.Endpoint)
+	if err != nil {
+		return fmt.Errorf("Error parsing S3 Endpoint URL: %w", err)
+	}
 
 	var ssl bool
 	if u.Scheme == "https" {

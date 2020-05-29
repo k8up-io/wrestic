@@ -1,4 +1,4 @@
-FROM docker.io/golang:1.13 as build
+FROM docker.io/golang:1.14 as build
 
 RUN set -x; \
     apt-get update \
