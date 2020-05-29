@@ -31,7 +31,7 @@ func PodExec(pod BackupPod, log logr.Logger) (*ExecData, *bytes.Buffer, error) {
 		return nil, nil, fmt.Errorf("can't create k8s for exec: %v", err)
 	}
 
-	req := k8sclient.Core().RESTClient().Post().
+	req := k8sclient.CoreV1().RESTClient().Post().
 		Resource("pods").
 		Name(pod.PodName).
 		Namespace(pod.Namespace).

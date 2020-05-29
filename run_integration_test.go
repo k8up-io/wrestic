@@ -13,6 +13,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -46,8 +48,8 @@ func prepare(t *testing.T, tmpdir string) func() {
 		panic(err)
 	}
 
-	getMinio(tmpdir)
-	getRestic(tmpdir)
+	getMinio(t, tmpdir)
+	getRestic(t, tmpdir)
 	return runMinio(t, tmpdir)
 }
 
@@ -82,7 +84,7 @@ func runIntegrationTests(t *testing.T, tmpdir string) {
 	fmt.Println("=================== Tests finished ===================")
 }
 
-func getMinio(tmpdir string) {
+func getMinio(t *testing.T, tmpdir string) {
 
 	fmt.Println("Downloading minio...")
 
@@ -96,7 +98,7 @@ func getMinio(tmpdir string) {
 	url := fmt.Sprintf("https://dl.minio.io/server/minio/release/%s-%s/minio",
 		runtime.GOOS, runtime.GOARCH)
 
-	downloadBinary(minioPath, url)
+	assert.NoError(t, downloadBinary(minioPath, url))
 
 }
 
@@ -104,8 +106,8 @@ func runMinio(t *testing.T, tmpdir string) func() {
 	configDir := filepath.Join(tmpdir, "config")
 	rootDir := filepath.Join(tmpdir, "root")
 
-	os.MkdirAll(configDir, 0700)
-	os.MkdirAll(rootDir, 0700)
+	assert.NoError(t, os.MkdirAll(configDir, 0700))
+	assert.NoError(t, os.MkdirAll(rootDir, 0700))
 
 	cmd := exec.Command(filepath.Join(tmpdir, "bin", "minio"),
 		"server",
@@ -158,7 +160,7 @@ func getMinioEnv() []string {
 	}
 }
 
-func getRestic(tmpdir string) {
+func getRestic(t *testing.T, tmpdir string) {
 	fmt.Println("Downloading restic")
 
 	bzipPath := filepath.Join(tmpdir, "bin", "restic.bz2")
@@ -176,7 +178,7 @@ func getRestic(tmpdir string) {
 	extract := exec.Command("bzip2", "-d", bzipPath)
 	addOutputs(extract)
 	extract.Dir = filepath.Dir(bzipPath)
-	extract.Run()
+	assert.NoError(t, extract.Run())
 
 }
 
