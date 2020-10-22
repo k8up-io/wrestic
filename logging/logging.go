@@ -49,12 +49,16 @@ type BackupStatus struct {
 // logging, metrics and webhooks.
 type SummaryFunc func(summary BackupSummary, errorCount int, folder string, startTimestamp, endTimestamp int64)
 
+// PercentageFunc should format and print the given float.
+type PercentageFunc func(logr.InfoLogger, float64)
+
 type BackupOutputParser struct {
-	log         logr.Logger
-	errorCount  int
-	lineCounter int
-	summaryfunc SummaryFunc
-	folder      string
+	log            logr.Logger
+	errorCount     int
+	lineCounter    int
+	summaryFunc    SummaryFunc
+	percentageFunc PercentageFunc
+	folder         string
 }
 
 type BackupError struct {
@@ -124,11 +128,22 @@ func (l *LogErrPrinter) out(s string) error {
 	return nil
 }
 
-func NewBackupOutputParser(logger logr.Logger, folderName string, summaryfunc SummaryFunc) io.Writer {
+func NewBackupOutputParser(logger logr.Logger, folderName string, summaryFunc SummaryFunc) io.Writer {
 	bop := &BackupOutputParser{
-		log:         logger,
-		folder:      folderName,
-		summaryfunc: summaryfunc,
+		log:            logger,
+		folder:         folderName,
+		summaryFunc:    summaryFunc,
+		percentageFunc: PrintPercentage,
+	}
+	return New(bop.out)
+}
+
+func NewStdinBackupOutputParser(logger logr.Logger, folderName string, summaryFunc SummaryFunc) io.Writer {
+	bop := &BackupOutputParser{
+		log:            logger,
+		folder:         folderName,
+		summaryFunc:    summaryFunc,
+		percentageFunc: IgnorePercentage,
 	}
 	return New(bop.out)
 }
@@ -149,14 +164,22 @@ func (b *BackupOutputParser) out(s string) error {
 	case "status":
 		// Restic does the json output with 60hz, which is a bit much...
 		if b.lineCounter%60 == 0 {
-			percent := envelope.PercentDone * 100
-			b.log.Info("progress of backup", "percentage", fmt.Sprintf("%.2f%%", percent))
+			b.percentageFunc(b.log, envelope.PercentDone)
 		}
 		b.lineCounter++
 	case "summary":
 		b.log.Info("backup finished", "new files", envelope.FilesNew, "changed files", envelope.FilesChanged, "errors", b.errorCount)
 		b.log.Info("stats", "time", envelope.TotalDuration, "bytes added", envelope.DataAdded, "bytes processed", envelope.TotalBytesProcessed)
-		b.summaryfunc(envelope.BackupSummary, b.errorCount, b.folder, 1, time.Now().Unix())
+		b.summaryFunc(envelope.BackupSummary, b.errorCount, b.folder, 1, time.Now().Unix())
 	}
 	return nil
+}
+
+func PrintPercentage(logger logr.InfoLogger, p float64) {
+	percent := p * 100
+	logger.Info("progress of backup", "percentage", fmt.Sprintf("%.2f%%", percent))
+}
+
+func IgnorePercentage(_ logr.InfoLogger, _ float64) {
+	// NOOP
 }
