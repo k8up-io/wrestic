@@ -28,7 +28,7 @@ func PodExec(pod BackupPod, log logr.Logger) (*ExecData, error) {
 	config, _ := getClientConfig()
 	k8sclient, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		return nil, fmt.Errorf("can't create k8s for exec: %v", err)
+		return nil, fmt.Errorf("can't create k8s for exec: %w", err)
 	}
 
 	req := k8sclient.CoreV1().RESTClient().Post().
@@ -38,7 +38,7 @@ func PodExec(pod BackupPod, log logr.Logger) (*ExecData, error) {
 		SubResource("exec")
 	scheme := runtime.NewScheme()
 	if err := apiv1.AddToScheme(scheme); err != nil {
-		return nil, fmt.Errorf("can't add runtime scheme: %v", err)
+		return nil, fmt.Errorf("can't add runtime scheme: %w", err)
 	}
 
 	command := qsplit.ToStrings([]byte(pod.Command))
