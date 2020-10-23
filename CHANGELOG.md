@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Make waiting for locks more stable
 - Don't drop k8sExe stderr output ([#27])
-
+- Don't print the percentage when using stdin backups ([#28])
 
 ## [v0.2.0] 2020-05-29
 ### Changed
@@ -142,3 +142,4 @@ compatibility with older operator versions. Changes to the design contain:
 [v0.0.1]: https://git.vshn.net/vshn/wrestic/tree/v0.0.1
 
 [#27]: https://github.com/vshn/wrestic/pull/27
+[#28]: https://github.com/vshn/wrestic/pull/28
