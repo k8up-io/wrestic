@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Fixed
 - Make waiting for locks more stable
+- Don't drop k8sExe stderr output ([#27])
 
 ## [v0.2.0] 2020-05-29
 ### Changed
@@ -138,3 +139,5 @@ compatibility with older operator versions. Changes to the design contain:
 [v0.0.3]: https://git.vshn.net/vshn/wrestic/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://git.vshn.net/vshn/wrestic/compare/v0.0.1...v0.0.2
 [v0.0.1]: https://git.vshn.net/vshn/wrestic/tree/v0.0.1
+
+[#27]: https://github.com/vshn/wrestic/pull/27
