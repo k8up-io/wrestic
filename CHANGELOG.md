@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Fixed
-- Make waiting for locks more stable
+- Make waiting for locks more stable ([#24])
 - Don't drop k8sExe stderr output ([#27])
 - Don't print the percentage when using stdin backups ([#28])
 
@@ -132,14 +132,25 @@ compatibility with older operator versions. Changes to the design contain:
 - Improved error detection and various bugfixes
 - Timeout for initial snapshot listing, default: 30s
 
-[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.0.7...master
-[v0.0.7]: https://git.vshn.net/vshn/wrestic/compare/v0.0.6...v0.0.7
-[v0.0.6]: https://git.vshn.net/vshn/wrestic/compare/v0.0.5...v0.0.6
-[v0.0.5]: https://git.vshn.net/vshn/wrestic/compare/v0.0.4...v0.0.5
-[v0.0.4]: https://git.vshn.net/vshn/wrestic/compare/v0.0.3...v0.0.4
-[v0.0.3]: https://git.vshn.net/vshn/wrestic/compare/v0.0.2...v0.0.3
-[v0.0.2]: https://git.vshn.net/vshn/wrestic/compare/v0.0.1...v0.0.2
-[v0.0.1]: https://git.vshn.net/vshn/wrestic/tree/v0.0.1
+[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.2.1...master
 
+[v0.2.0]: https://github.com/vshn/wrestic/releases/tag/v0.2.0
+[v0.1.9]: https://github.com/vshn/wrestic/releases/tag/v0.1.9
+[v0.1.8]: https://github.com/vshn/wrestic/releases/tag/v0.1.8
+[v0.1.7]: https://github.com/vshn/wrestic/releases/tag/v0.1.7
+[v0.1.6]: https://github.com/vshn/wrestic/releases/tag/v0.1.6
+[v0.0.10]: https://github.com/vshn/wrestic/releases/tag/v0.0.10
+[v0.0.9]: https://github.com/vshn/wrestic/releases/tag/v0.0.9
+[v0.0.8]: https://github.com/vshn/wrestic/releases/tag/v0.0.8
+[v0.0.7]: https://github.com/vshn/wrestic/releases/tag/v0.0.7
+[v0.0.6]: https://github.com/vshn/wrestic/releases/tag/v0.0.6
+[v0.0.5]: https://github.com/vshn/wrestic/releases/tag/v0.0.5
+[v0.0.4]: https://github.com/vshn/wrestic/releases/tag/v0.0.4
+[v0.0.3]: https://github.com/vshn/wrestic/releases/tag/v0.0.3
+[v0.0.2]: https://github.com/vshn/wrestic/releases/tag/v0.0.2
+[v0.0.1]: https://github.com/vshn/wrestic/releases/tag/v0.0.1
+
+[#24]: https://github.com/vshn/wrestic/pull/24
 [#27]: https://github.com/vshn/wrestic/pull/27
 [#28]: https://github.com/vshn/wrestic/pull/28
+[#35]: https://github.com/vshn/wrestic/pull/35
