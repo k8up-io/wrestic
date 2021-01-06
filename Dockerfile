@@ -34,6 +34,8 @@ WORKDIR /app
 RUN mkdir /.cache && chmod -R g=u /.cache
 RUN apk --no-cache add ca-certificates
 
+USER 1001
+
 COPY --from=build /usr/local/bin/restic /usr/local/bin/restic
 COPY --from=build /go/bin/wrestic /app/
 
