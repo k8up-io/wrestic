@@ -6,10 +6,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
-### Changed
-- Use user 1001 instead of root
-
 ### Fixed
 - Make waiting for locks more stable
 - Don't drop k8sExe stderr output ([#27])
