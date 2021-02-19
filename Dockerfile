@@ -1,5 +1,7 @@
 FROM docker.io/golang:1.15 as build
 
+ENV RESTIC_VERSION=0.12.0
+
 RUN set -x; \
     apt-get update \
  && apt-get install -y \
@@ -8,14 +10,10 @@ RUN set -x; \
       gcc \
       git \
       wget \
- && git clone https://github.com/vshn/restic \
- && cd restic \
- && git checkout 2319-dump-dir-tar \
- && go run -mod=vendor build.go -v \
- && mv restic /usr/local/bin/restic \
- && chmod +x /usr/local/bin/restic \
- && mkdir /.cache \
- && chmod -R 777 /.cache
+ && wget "https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2" \
+ && bunzip2 "restic_${RESTIC_VERSION}_linux_amd64.bz2" \
+ && mkdir /build \
+ && mv "restic_${RESTIC_VERSION}_linux_amd64" /build/restic
 
 WORKDIR /app
 COPY go.mod go.sum ./
@@ -34,7 +32,7 @@ WORKDIR /app
 RUN mkdir /.cache && chmod -R g=u /.cache
 RUN apk --no-cache add ca-certificates
 
-COPY --from=build /usr/local/bin/restic /usr/local/bin/restic
+COPY --from=build /build/restic /usr/local/bin/restic
 COPY --from=build /go/bin/wrestic /app/
 
 ENTRYPOINT [ "./wrestic" ]
