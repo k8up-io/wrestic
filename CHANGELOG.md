@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Don't print the percentage when using stdin backups ([#28])
 ### Changed
 - Update to Restic 0.12.0 ([#57])
+- Adjust exit code handling to restic v0.12.0
 
 ## [v0.2.0] 2020-05-29
 ### Changed
