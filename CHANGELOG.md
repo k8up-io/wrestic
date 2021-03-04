@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Make waiting for locks more stable
 - Don't drop k8sExe stderr output ([#27])
 - Don't print the percentage when using stdin backups ([#28])
+- Github actions
 ### Changed
 - Update to Restic 0.12.0 ([#57])
 - Adjust exit code handling to restic v0.12.0
