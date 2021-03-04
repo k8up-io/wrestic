@@ -16,10 +16,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Set version latest
       if: github.ref == 'refs/heads/master'
-      run: echo ::set-env name=VERSION::latest
+      run: echo VERSION::latest >> $GITHUB_ENV
     - name: Set version from tag
       if: startsWith(github.ref, 'refs/tags/v')
-      run: echo ::set-env name=VERSION::$(echo ${GITHUB_REF#refs/tags/})
+      run: echo VERSION::$(echo ${GITHUB_REF#refs/tags/}) >> $GITHUB_ENV
     - name: Build Image
       run: docker build -t "${IMAGE}:${VERSION}" .
     - name: Push Image

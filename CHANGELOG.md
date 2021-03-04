@@ -6,13 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.2.1] 2021-03-04
 ### Fixed
 - Make waiting for locks more stable
 - Don't drop k8sExe stderr output ([#27])
 - Don't print the percentage when using stdin backups ([#28])
+- Github actions
 ### Changed
 - Update to Restic 0.12.0 ([#57])
-- Adjust exit code handling to restic v0.12.0
+- Adjust exit code handling to restic 0.12.0
 
 ## [v0.2.0] 2020-05-29
 ### Changed
