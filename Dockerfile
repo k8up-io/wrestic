@@ -26,8 +26,8 @@ RUN go test -v ./...
 ENV CGO_ENABLED=0
 RUN go install -v ./...
 
-# runtime image
-FROM docker.io/alpine:3
+# nonroot image
+FROM docker.io/alpine:3 as nonroot
 WORKDIR /app
 
 RUN mkdir /.cache && chmod -R g=u /.cache
@@ -36,4 +36,11 @@ RUN apk --no-cache add ca-certificates
 COPY --from=build /build/restic /usr/local/bin/restic
 COPY --from=build /go/bin/wrestic /app/
 
+USER 1001
+
 ENTRYPOINT [ "./wrestic" ]
+
+# root image
+FROM nonroot
+
+USER 0
