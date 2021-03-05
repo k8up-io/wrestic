@@ -13,7 +13,8 @@ RUN set -x; \
  && wget "https://github.com/restic/restic/releases/download/v${RESTIC_VERSION}/restic_${RESTIC_VERSION}_linux_amd64.bz2" \
  && bunzip2 "restic_${RESTIC_VERSION}_linux_amd64.bz2" \
  && mkdir /build \
- && mv "restic_${RESTIC_VERSION}_linux_amd64" /build/restic
+ && mv "restic_${RESTIC_VERSION}_linux_amd64" /build/restic \
+ && chmod +x /build/restic
 
 WORKDIR /app
 COPY go.mod go.sum ./
