@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Wrong binary permissions in container ([#70])
 ### Added
-- Nonroot variant of image ([#58])
+- Nonroot variant of image ([#71])
 
 ## [v0.2.1] 2021-03-04
 ### Fixed
@@ -156,3 +156,4 @@ compatibility with older operator versions. Changes to the design contain:
 [#57]: https://github.com/vshn/wrestic/pull/57
 [#58]: https://github.com/vshn/wrestic/pull/58
 [#70]: https://github.com/vshn/wrestic/issues/70
+[#71]: https://github.com/vshn/wrestic/pull/71
