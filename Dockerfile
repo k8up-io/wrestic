@@ -24,7 +24,8 @@ COPY . .
 
 RUN go test -v ./...
 ENV CGO_ENABLED=0
-RUN go install -v ./...
+RUN BUILD_VERSION=$(git describe --tags --always --dirty --match=v* || (echo "command failed $$?"; exit 1)) \
+ && go install -v -ldflags "-X main.Version=$BUILD_VERSION -X 'main.BuildDate=$(date)'" ./...
 
 # nonroot image
 FROM docker.io/alpine:3 as nonroot
