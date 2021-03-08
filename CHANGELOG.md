@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+### Fixed
+- Wrong binary permissions in container ([#70])
 ## [v0.2.1] 2021-03-04
 ### Fixed
 - Make waiting for locks more stable
@@ -150,3 +151,4 @@ compatibility with older operator versions. Changes to the design contain:
 [#27]: https://github.com/vshn/wrestic/pull/27
 [#28]: https://github.com/vshn/wrestic/pull/28
 [#57]: https://github.com/vshn/wrestic/pull/57
+[#70]: https://github.com/vshn/wrestic/issues/70
