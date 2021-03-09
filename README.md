@@ -59,3 +59,9 @@ docker run -e "HOSTNAME=test" -e "RESTORE_S3ENDPOINT=http://localhost:9000/bucke
 ```
 
 The container will exit after the job is done. If a valid `PROM_URL` is provided it will push metrics there.
+
+## Nonroot Image
+There is a variant of this image which runs as a non-root user. Build it with the following target:
+```
+docker build --target nonroot -t wrestic/wrestic .
+```
