@@ -22,7 +22,7 @@ const (
 	key           = "user"
 	repopw        = "password"
 	repo          = "s3:http://localhost:9000/test"
-	resticVersion = "v0.9.5"
+	resticVersion = "v0.12.0"
 	resticRepo    = "https://github.com/restic/restic/releases/download"
 )
 
