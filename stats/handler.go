@@ -73,7 +73,7 @@ func (h *Handler) SendWebhook(hook restic.WebhookProvider) error {
 		return fmt.Errorf("webhook data is empty")
 	}
 
-	postBody := bytes.NewReader(hook.ToJson())
+	postBody := bytes.NewReader(data)
 
 	resp, err := http.Post(h.webhookURL, "application/json", postBody)
 	if err != nil || !strings.HasPrefix(resp.Status, "200") {
