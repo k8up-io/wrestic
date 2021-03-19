@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Fixed
+- Also send webhooks for restores ([#77])
 
 ## [v0.2.2] 2021-03-09
 ### Fixed
@@ -161,3 +163,4 @@ compatibility with older operator versions. Changes to the design contain:
 [#71]: https://github.com/vshn/wrestic/pull/71
 [#73]: https://github.com/vshn/wrestic/pull/73
 [#74]: https://github.com/vshn/wrestic/pull/74
+[#77]: https://github.com/vshn/wrestic/pull/77
