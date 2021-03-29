@@ -71,7 +71,7 @@ type BackupError struct {
 	Item   string `json:"item"`
 }
 
-type outFunc func(string) error
+type outFunc func(string)
 
 // New creates a writer which directly writes to the given logger function.
 func New(out outFunc) io.Writer {
@@ -101,10 +101,7 @@ func (w writer) Write(p []byte) (int, error) {
 	scanner := bufio.NewScanner(bytes.NewReader(p))
 
 	for scanner.Scan() {
-		err := w.out(scanner.Text())
-		if err != nil {
-			return len(p), err
-		}
+		w.out(scanner.Text())
 	}
 
 	return len(p), nil
@@ -114,18 +111,16 @@ type LogInfoPrinter struct {
 	log logr.InfoLogger
 }
 
-func (l *LogInfoPrinter) out(s string) error {
+func (l *LogInfoPrinter) out(s string) {
 	l.log.Info(s)
-	return nil
 }
 
 type LogErrPrinter struct {
 	Log logr.Logger
 }
 
-func (l *LogErrPrinter) out(s string) error {
+func (l *LogErrPrinter) out(s string) {
 	l.Log.Error(fmt.Errorf("error during command"), s)
-	return nil
 }
 
 func NewBackupOutputParser(logger logr.Logger, folderName string, summaryFunc SummaryFunc) io.Writer {
@@ -148,13 +143,12 @@ func NewStdinBackupOutputParser(logger logr.Logger, folderName string, summaryFu
 	return New(bop.out)
 }
 
-func (b *BackupOutputParser) out(s string) error {
+func (b *BackupOutputParser) out(s string) {
 	envelope := &BackupEnvelope{}
 
 	err := json.Unmarshal([]byte(s), envelope)
 	if err != nil {
 		b.log.Error(err, "can't decode restic json output", "string", s)
-		return err
 	}
 
 	switch envelope.MessageType {
@@ -172,7 +166,6 @@ func (b *BackupOutputParser) out(s string) error {
 		b.log.Info("stats", "time", envelope.TotalDuration, "bytes added", envelope.DataAdded, "bytes processed", envelope.TotalBytesProcessed)
 		b.summaryFunc(envelope.BackupSummary, b.errorCount, b.folder, 1, time.Now().Unix())
 	}
-	return nil
 }
 
 func PrintPercentage(logger logr.InfoLogger, p float64) {
