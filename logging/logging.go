@@ -55,7 +55,6 @@ type PercentageFunc func(logr.InfoLogger, float64)
 type BackupOutputParser struct {
 	log            logr.Logger
 	errorCount     int
-	lineCounter    int
 	summaryFunc    SummaryFunc
 	percentageFunc PercentageFunc
 	folder         string
@@ -156,11 +155,7 @@ func (b *BackupOutputParser) out(s string) {
 		b.errorCount++
 		b.log.Error(fmt.Errorf("error occurred during backup"), envelope.Item+" during "+envelope.During+" "+envelope.Error.Op)
 	case "status":
-		// Restic does the json output with 60hz, which is a bit much...
-		if b.lineCounter%60 == 0 {
-			b.percentageFunc(b.log, envelope.PercentDone)
-		}
-		b.lineCounter++
+		b.percentageFunc(b.log, envelope.PercentDone)
 	case "summary":
 		b.log.Info("backup finished", "new files", envelope.FilesNew, "changed files", envelope.FilesChanged, "errors", b.errorCount)
 		b.log.Info("stats", "time", envelope.TotalDuration, "bytes added", envelope.DataAdded, "bytes processed", envelope.TotalBytesProcessed)
