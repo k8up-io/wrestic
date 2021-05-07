@@ -28,7 +28,7 @@ RUN BUILD_VERSION=$(git describe --tags --always --dirty --match=v* || (echo "co
  && go install -v -ldflags "-X main.Version=$BUILD_VERSION -X 'main.BuildDate=$(date)'" ./...
 
 # nonroot image
-FROM docker.io/alpine:3 as nonroot
+FROM docker.io/alpine:20210212 as nonroot
 WORKDIR /app
 
 RUN mkdir /.cache && chmod -R g=u /.cache
