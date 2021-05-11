@@ -1,8 +1,10 @@
 # Wrestic
 
-Wrapper for restic. This is the backup runner of k8up. Documentation coming soon.
+Wrapper for restic.
+This is the backup runner of k8up.
 
 ## Configuration
+
 All the configuration needed can be done via environment variables:
 
 * `HOSTNAME` overwrite the hostname used for the backup
@@ -22,46 +24,57 @@ All the configuration needed can be done via environment variables:
 * `RESTORE_SECRETACCESSKEY` s3 secretAccessKey for the restore s3 endpoint
 * `BACKUPCOMMAND_ANNOTATION` name of the backup command annotation, default: `k8up.syn.tools/backupcommand`
 * `FILEEXTENSION_ANNOTATION` name of the file extension annotation, default: `k8up.syn.tools/file-extension`
+* `RESTIC_OPTIONS` additional options, separated with a comma (i.e. `key=value,key2=value2,…`), to pass on to `restic`, [see `--option`](https://restic.readthedocs.io/en/stable/manual_rest.html)
+* `RESTIC_BINARY` defines the `restic` binary to use, default: `/usr/local/bin/restic`
 
-Configuration for the Restic repository also has to be provided via env variables. See the official [docs](https://restic.readthedocs.io/en/latest/).
+Configuration for the Restic repository also has to be provided via env variables, see [the official docs](https://restic.readthedocs.io/en/stable/040_backup.html#environment-variables).
 
 ## Execution
+
 First build the container:
 
-```
+```bash
 cd cmd/wrestic
 docker build -t wrestic/wrestic .
 ```
 
 Then run the container and mount the folders you'd like to be backed up to `/data`:
-```
+
+```bash
 docker run -e "HOSTNAME=test" -e "PROM_URL=http://192.168.1.43:9091" -v /path/to/back:/data/ wrestic/wrestic
 ```
 
 Run a check of the repository:
-```
+
+```bash
 docker run -e "HOSTNAME=test" -e "PROM_URL=http://192.168.1.43:9091" -v /path/to/back:/data/ wrestic/wrestic -check
 ```
 
 Run a restore to disk:
-```
+
+```bash
 docker run -e "HOSTNAME=test" -v /path/for/restore:/restore wrestic -restore -restoreType folder
 ```
 
 Run a restore to disk with a filter:
-```
+
+```bash
 docker run -e "HOSTNAME=test" -v /patch/for/restore:/restore wrestic -restore -restoreType folder -restoreFilter /var/mysql
 ```
 
 Run a restore to S3:
-```
+
+```bash
 docker run -e "HOSTNAME=test" -e "RESTORE_S3ENDPOINT=http://localhost:9000/bucketName" -e "RESTORE_ACCESSKEYID=1324" -e "RESTORE_SECRETACCESSKEY=secret" wrestic -restore -restoreType s3
 ```
 
-The container will exit after the job is done. If a valid `PROM_URL` is provided it will push metrics there.
+The container will exit after the job is done.
+If a valid `PROM_URL` is provided, it will push metrics there.
 
 ## Nonroot Image
+
 There is a variant of this image which runs as a non-root user. Build it with the following target:
-```
+
+```bash
 docker build --target nonroot -t wrestic/wrestic .
 ```
