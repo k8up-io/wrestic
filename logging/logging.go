@@ -147,7 +147,7 @@ func (b *BackupOutputParser) out(s string) {
 
 	err := json.Unmarshal([]byte(s), envelope)
 	if err != nil {
-		b.log.Info("wrestic output", "msg", s)
+		b.log.Info("restic output", "msg", s)
 	}
 
 	switch envelope.MessageType {
