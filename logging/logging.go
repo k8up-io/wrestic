@@ -147,7 +147,7 @@ func (b *BackupOutputParser) out(s string) {
 
 	err := json.Unmarshal([]byte(s), envelope)
 	if err != nil {
-		b.log.Error(err, "can't decode restic json output", "string", s)
+		b.log.Info("restic output", "msg", s)
 	}
 
 	switch envelope.MessageType {
