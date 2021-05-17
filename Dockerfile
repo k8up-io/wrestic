@@ -1,6 +1,6 @@
 FROM docker.io/golang:1.15 as build
 
-ENV RESTIC_VERSION=0.12.0
+ARG RESTIC_VERSION=0.12.0
 
 RUN set -x; \
     apt-get update \

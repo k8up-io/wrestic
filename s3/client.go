@@ -46,7 +46,7 @@ func (c *Client) Connect() error {
 	} else if u.Scheme == "http" {
 		ssl = false
 	} else {
-		return fmt.Errorf("Endpoint %v has wrong scheme (http/https)", c.Endpoint)
+		return fmt.Errorf("endpoint '%v' has wrong scheme '%s' (should be 'http' or 'https')", c.Endpoint, u.Scheme)
 	}
 
 	c.bucket = strings.Replace(u.Path, "/", "", 1)
