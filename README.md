@@ -78,3 +78,28 @@ There is a variant of this image which runs as a non-root user. Build it with th
 ```bash
 docker build --target nonroot -t wrestic/wrestic .
 ```
+
+## Integration Tests
+
+To just run the integration tests, you can execute `make integration-test`.
+
+If you want to run the integration tests in your IDE, you need to run `make integration-test-setup` first, and you need to define the following environment variables.
+
+```dotenv
+# adjust to where you checked out the wrestic source code
+RESTIC_PATH=/home/<USER>/src/vshn/wrestic/.test/restic
+RESTIC_BINARY=/home/<USER>/src/vshn/wrestic/.test/restic
+BACKUP_DIR=/home/<USER>/src/vshn/wrestic/.test/backup/
+RESTORE_DIR=/home/<USER>/src/vshn/wrestic/.test/restore/
+
+RESTIC_PASSWORD=repopw
+RESTIC_REPOSITORY=s3:http://localhost:9000/test
+RESTORE_S3ENDPOINT=http://localhost:9000/restore
+AWS_SECRET_ACCESS_KEY=secretkey
+AWS_ACCESS_KEY_ID=accesskey
+RESTORE_ACCESSKEYID=accesskey
+RESTORE_SECRETACCESSKEY=secretkey
+STATS_URL=http://localhost:8091
+```
+
+The stop all background services (like Minio) and remove all cached binaries, run `make clean`.
