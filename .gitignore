@@ -29,3 +29,4 @@ gen### Go template
 .env
 
 tmp/
+.test
