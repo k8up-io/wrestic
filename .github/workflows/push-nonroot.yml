@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: "1"
-      IMAGE: docker.io/${{ github.repository }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -22,10 +21,19 @@ jobs:
     - name: Set version from tag
       if: startsWith(github.ref, 'refs/tags/v')
       run: echo VERSION="$(echo ${GITHUB_REF#refs/tags/})-nonroot" >> $GITHUB_ENV
-    - name: Push Image
+    - name: Push Image to docker.io
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: "${{ env.IMAGE }}:${{ env.VERSION }}"
+        registry: docker.io
+        name: "${{ github.repository }}:${{ env.VERSION }}"
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        buildoptions: --target nonroot
+    - name: Push Image to quay.io
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        registry: quay.io
+        name: "${{ github.repository }}:${{ env.VERSION }}"
+        username: ${{ secrets.QUAY_IO_USERNAME }}
+        password: ${{ secrets.QUAY_IO_PASSWORD }}
         buildoptions: --target nonroot

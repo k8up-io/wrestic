@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Pass multiple 'option' flags to restic ([#89])
+- Docker image mirror and push to quay.io ([#92])
 
 ## [v0.2.3] 2021-03-30
 ### Changed
@@ -185,3 +186,4 @@ compatibility with older operator versions. Changes to the design contain:
 [#88]: https://github.com/vshn/wrestic/pull/88
 [#89]: https://github.com/vshn/wrestic/pull/89
 [#90]: https://github.com/vshn/wrestic/pull/90
+[#92]: https://github.com/vshn/wrestic/pull/92
