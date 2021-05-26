@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.3.0] 2021-05-26
+### Changed
+- Refactor Integration tests ([#90])
+- Improved logging when wrestic message is not JSON ([#88])
+
+### Added
+- Pass multiple 'option' flags to restic ([#89])
+
 ## [v0.2.3] 2021-03-30
 ### Changed
 - Enable `go mod tidy` for renovate ([#80])
@@ -153,7 +161,8 @@ compatibility with older operator versions. Changes to the design contain:
 - Improved error detection and various bugfixes
 - Timeout for initial snapshot listing, default: 30s
 
-[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.0.7...master
+[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.3.0...master
+[v0.3.0]: https://github.com/vshn/wrestic/releases/tag/v0.3.0
 [v0.0.7]: https://git.vshn.net/vshn/wrestic/compare/v0.0.6...v0.0.7
 [v0.0.6]: https://git.vshn.net/vshn/wrestic/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://git.vshn.net/vshn/wrestic/compare/v0.0.4...v0.0.5
@@ -173,3 +182,6 @@ compatibility with older operator versions. Changes to the design contain:
 [#80]: https://github.com/vshn/wrestic/pull/80
 [#81]: https://github.com/vshn/wrestic/pull/81
 [#82]: https://github.com/vshn/wrestic/pull/82
+[#88]: https://github.com/vshn/wrestic/pull/88
+[#89]: https://github.com/vshn/wrestic/pull/89
+[#90]: https://github.com/vshn/wrestic/pull/90
