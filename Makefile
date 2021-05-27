@@ -75,6 +75,9 @@ minio-download: .test/minio ## Download minio
 
 restic-download: .test/restic ## Download restic
 
+docker: ## Builds the docker image. Overwrite the tag by changing the 'docker_tag' variable.
+	@docker build -t $(docker_tag) .
+
 $(minio_pid): export MINIO_ACCESS_KEY = $(minio_root_user)
 $(minio_pid): export MINIO_SECRET_KEY = $(minio_root_password)
 $(minio_pid): minio-download

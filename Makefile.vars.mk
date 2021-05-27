@@ -31,3 +31,5 @@ minio_root_user ?= accesskey
 minio_root_password ?= secretkey
 minio_pid ?= $(minio_path).pid
 minio_url ?= https://dl.min.io/server/minio/release/$(os)-$(arch)/minio
+
+docker_tag ?= local.dev/vshn/wrestic:snapshot
