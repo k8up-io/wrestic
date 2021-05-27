@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.3.1] 2021-05-27
+### Fixed
+- Fix skipping backup of annotated pods ([#93])
+
 ## [v0.3.0] 2021-05-26
 ### Changed
 - Refactor Integration tests ([#90])
@@ -162,7 +166,8 @@ compatibility with older operator versions. Changes to the design contain:
 - Improved error detection and various bugfixes
 - Timeout for initial snapshot listing, default: 30s
 
-[Unreleased]: https://git.vshn.net/vshn/wrestic/compare/v0.3.0...master
+[Unreleased]: https://github.com/vshn/wrestic/compare/v0.3.0...master
+[v0.3.1]: https://github.com/vshn/wrestic/releases/tag/v0.3.1
 [v0.3.0]: https://github.com/vshn/wrestic/releases/tag/v0.3.0
 [v0.0.7]: https://git.vshn.net/vshn/wrestic/compare/v0.0.6...v0.0.7
 [v0.0.6]: https://git.vshn.net/vshn/wrestic/compare/v0.0.5...v0.0.6
@@ -187,3 +192,4 @@ compatibility with older operator versions. Changes to the design contain:
 [#89]: https://github.com/vshn/wrestic/pull/89
 [#90]: https://github.com/vshn/wrestic/pull/90
 [#92]: https://github.com/vshn/wrestic/pull/92
+[#93]: https://github.com/vshn/wrestic/pull/93
