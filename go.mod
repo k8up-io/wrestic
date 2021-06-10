@@ -8,6 +8,7 @@ require (
 	github.com/emicklei/go-restful v2.8.0+incompatible // indirect
 	github.com/emicklei/go-restful-swagger12 v0.0.0-20170208215640-dcef7f557305 // indirect
 	github.com/firepear/qsplit v2.2.3+incompatible
+	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-ini/ini v1.38.2 // indirect
 	github.com/go-logr/glogr v0.1.0
 	github.com/go-logr/logr v0.1.0
@@ -16,6 +17,7 @@ require (
 	github.com/go-openapi/spec v0.0.0-20180710175419-bce47c9386f9 // indirect
 	github.com/go-openapi/swag v0.0.0-20180703152219-2b0bd4f193d0 // indirect
 	github.com/golang/glog v0.0.0-20210429001901-424d2337a529
+	github.com/google/btree v1.0.1 // indirect
 	github.com/googleapis/gnostic v0.2.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7 // indirect
 	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c // indirect
@@ -23,9 +25,12 @@ require (
 	github.com/juju/ratelimit v1.0.1 // indirect
 	github.com/mailru/easyjson v0.0.0-20180730094502-03f2033d19d5 // indirect
 	github.com/minio/minio-go v6.0.7+incompatible
+	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
-	github.com/prometheus/client_golang v1.10.0
+	github.com/prometheus/client_golang v1.11.0
+	github.com/smartystreets/goconvey v1.6.4 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.7.0
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
