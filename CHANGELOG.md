@@ -171,7 +171,7 @@ compatibility with older operator versions. Changes to the design contain:
 - Improved error detection and various bugfixes
 - Timeout for initial snapshot listing, default: 30s
 
-[Unreleased]: https://github.com/vshn/wrestic/compare/v0.3.0...master
+[Unreleased]: https://github.com/vshn/wrestic/compare/v0.3.2...master
 [v0.3.2]: https://github.com/vshn/wrestic/releases/tag/v0.3.2
 [v0.3.1]: https://github.com/vshn/wrestic/releases/tag/v0.3.1
 [v0.3.0]: https://github.com/vshn/wrestic/releases/tag/v0.3.0
