@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.3.2] 2021-07-30
+### Fixed
+
+- Remove stale locks before invoking other restic actions (https://github.com/vshn/k8up/issues/456)
+
 ## [v0.3.1] 2021-05-27
 ### Fixed
 - Fix skipping backup of annotated pods ([#93])
