@@ -9,14 +9,14 @@ import (
 	"github.com/go-logr/logr"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/push"
-	"github.com/vshn/wrestic/restic"
+	"github.com/vshn/wrestic/restic/cli"
 )
 
 const (
 	subsystem = "restic_backup"
 )
 
-var _ restic.StatsHandler = &Handler{}
+var _ cli.StatsHandler = &Handler{}
 
 type Handler struct {
 	promURL      string
@@ -34,7 +34,7 @@ func NewHandler(promURL, promHostname, webhookURL string, log logr.Logger) *Hand
 	}
 }
 
-func (h *Handler) SendPrometheus(promStats restic.PrometheusProvider) error {
+func (h *Handler) SendPrometheus(promStats cli.PrometheusProvider) error {
 	if h.promURL == "" {
 		return nil
 	}
@@ -58,7 +58,7 @@ func (h *Handler) updatePrometheus(collector prometheus.Collector) error {
 		Add()
 }
 
-func (h *Handler) SendWebhook(hook restic.WebhookProvider) error {
+func (h *Handler) SendWebhook(hook cli.WebhookProvider) error {
 	if h.webhookURL == "" {
 		return nil
 	}
