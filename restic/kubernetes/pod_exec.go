@@ -7,7 +7,7 @@ import (
 
 	"github.com/firepear/qsplit"
 	"github.com/go-logr/logr"
-	"github.com/vshn/wrestic/logging"
+	"github.com/vshn/wrestic/restic/logging"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
