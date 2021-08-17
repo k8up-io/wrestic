@@ -1,4 +1,4 @@
-FROM docker.io/golang:1.16 as build
+FROM docker.io/golang:1.17 as build
 
 ARG RESTIC_VERSION=0.12.0
 
