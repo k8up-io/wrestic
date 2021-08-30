@@ -24,7 +24,7 @@ require (
 	github.com/imdario/mergo v0.3.6 // indirect
 	github.com/juju/ratelimit v1.0.1 // indirect
 	github.com/mailru/easyjson v0.0.0-20180730094502-03f2033d19d5 // indirect
-	github.com/minio/minio-go v6.0.7+incompatible
+	github.com/minio/minio-go v6.0.57+incompatible
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
