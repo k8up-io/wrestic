@@ -1,5 +1,13 @@
 # Wrestic
 
+---
+
+**PLEASE NOTE: THIS REPOSITORY HAS BEEN ARCHIVED.**
+
+wrestic has been merged into [K8up](https://github.com/k8up-io/k8up) 2.0 and is available as `k8up restic` command.
+
+---
+
 Wrapper for restic.
 This is the backup runner of k8up.
 
