@@ -24,7 +24,8 @@ require (
 	github.com/imdario/mergo v0.3.6 // indirect
 	github.com/juju/ratelimit v1.0.1 // indirect
 	github.com/mailru/easyjson v0.0.0-20180730094502-03f2033d19d5 // indirect
-	github.com/minio/minio-go v6.0.7+incompatible
+	github.com/minio/minio-go v6.0.14+incompatible
+	github.com/minio/minio-go/v7 v7.0.15
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
@@ -34,7 +35,6 @@ require (
 	github.com/stretchr/testify v1.7.0
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
-	gopkg.in/ini.v1 v1.55.0 // indirect
 	k8s.io/api v0.0.0-20180103175015-389dfa299845
 	k8s.io/apimachinery v0.0.0-20180103174757-bc110fd540ab
 	k8s.io/client-go v5.0.1+incompatible
