@@ -1,4 +1,4 @@
-# ⚠️ This repository is no longer in develoopment
+# ⚠️ This repository is no longer in development
 
 wrestic is now part of K8up itself.
 The codebase has been migrated to https://github.com/k8up-io/k8up, please open issues there.
