@@ -1,3 +1,8 @@
+# ⚠️ This repository is no longer in develoopment
+
+wrestic is now part of K8up itself.
+The codebase has been migrated to https://github.com/k8up-io/k8up, please open issues there.
+
 # Wrestic
 
 Wrapper for restic.
